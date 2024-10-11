@@ -9,8 +9,8 @@ import { TerminalSection } from "./sections/terminalsection";
 import { HealthSection } from "./sections/healthsection";
 import { ConfigSection } from "./sections/configsection";
 import { TeleopSection } from "./sections/teleopsection";
-
-
+import { ThemeProvider } from "./components/theme-provider"
+ 
 import "./App.css";
 
 const sections = [
@@ -32,13 +32,17 @@ function App() {
     }
 
     return (
-        <div className="grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] ">
-            <TopBar />
-            <Sidebar sections={sections} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
-            <div className="overflow-y-auto p-4">
-                {selectedSection.component({})}
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            {
+            <div className="grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] ">
+                <TopBar />
+                <Sidebar sections={sections} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
+                <div className="overflow-y-auto p-4">
+                    {selectedSection.component({})}
+                </div>
             </div>
-        </div>
+            }
+        </ThemeProvider>
     );
 }
 
