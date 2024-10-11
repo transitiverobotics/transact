@@ -4,7 +4,7 @@
   </a>
 </p>
 
-### Transact
+### transAct
 An open-source robot fleet management dashboard
 
 by Transitive Robotics
