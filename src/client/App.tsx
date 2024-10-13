@@ -1,26 +1,20 @@
-import React from "react";
-import { useState } from "react";
-import { Sidebar } from "./components/sidebar";
-import { TopBar } from "./components/topbar";
-import { Section } from "./models/section";
-import { DevicesSection } from "./sections/devicessection";
-import { VideoSection } from "./sections/videosection";
-import { TerminalSection } from "./sections/terminalsection";
-import { HealthSection } from "./sections/healthsection";
-import { ConfigSection } from "./sections/configsection";
-import { TeleopSection } from "./sections/teleopsection";
-import { ThemeProvider } from "./components/theme-provider"
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from
+  'react-router-dom';
 
-import "./App.css";
+import { Sidebar } from './components/sidebar';
+import { TopBar } from './components/topbar';
+import { DevicesSection } from './sections/devicessection';
+import { VideoSection } from './sections/videosection';
+import { TerminalSection } from './sections/terminalsection';
+import { HealthSection } from './sections/healthsection';
+import { ConfigSection } from './sections/configsection';
+import { TeleopSection } from './sections/teleopsection';
+import { ThemeProvider } from './components/theme-provider';
 
-const sections = [
-    new Section("Devices", DevicesSection),
-    new Section("Video", VideoSection),
-    new Section("Teleoperation", TeleopSection),
-    new Section("Terminal", TerminalSection),
-    new Section("Health", HealthSection),
-    new Section("Configuration", ConfigSection),
-];
+import _ from 'lodash';
+
+import './App.css';
 
 // Just an example how to get env vars on the front-end in Vite (anything with
 // the VITE prefix)
@@ -32,26 +26,35 @@ const transitivePortal = `http${SSLs}://portal.${host}`;
 
 console.log({host, transitiveId, SSLs, transitivePortal});
 
+const sections = {
+  Devices: DevicesSection,
+  Video: VideoSection,
+  Teleoperation: TeleopSection,
+  Terminal: TerminalSection,
+  Health: HealthSection,
+  Configuration: ConfigSection,
+};
+
 function App() {
-    const [selectedSection, setSelectedSection] = useState<Section>(sections[0]);
-
-    const handleSectionClick = (section: Section) => {
-        setSelectedSection(section);
-    }
-
-    return (
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            {
-            <div className="grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] ">
-                <TopBar />
-                <Sidebar sections={sections} onSectionClick={handleSectionClick} selectedSection={selectedSection} />
-                <div className="overflow-y-auto p-4">
-                    {selectedSection.component({})}
-                </div>
-            </div>
-            }
-        </ThemeProvider>
-    );
+  return (
+    <Router>
+      <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+        <div className='grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] '>
+          <TopBar />
+          <Sidebar sections={sections} />
+          <div className='overflow-y-auto p-4'>
+            <Routes>
+              { _.map(sections, (Element, section) =>
+                  <Route key={section}
+                    path={section.toLowerCase()}
+                    element={<Element />} />)
+              }
+            </Routes>
+          </div>
+        </div>
+      </ThemeProvider>
+    </Router>
+  );
 }
 
 export default App;

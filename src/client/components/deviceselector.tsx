@@ -9,9 +9,9 @@ import {
 
 import { my_fake_devices } from "../models/device";
 
-export default function DeviceSelector() {
+export default function DeviceSelector({onChange}) {
     return (
-        <Select>
+        <Select onValueChange={onChange}>
         <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a device" />
         </SelectTrigger>
