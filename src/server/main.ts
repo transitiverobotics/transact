@@ -22,7 +22,7 @@ app.get('/hello', (_, res) => {
 
 app.post('/api/getJWT', (req, res) => {
   console.log('getJWT', req.body, req.user);
-  if (req.body.capability.endsWith('_robot-agent')) {
+  if (req.body.capability?.endsWith('_robot-agent')) {
     const msg =
       'We do not sign agent tokens. But capability tokens provide read-access.';
     log.warn(msg);
