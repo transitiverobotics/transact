@@ -10,7 +10,7 @@ import { HealthSection } from "./sections/healthsection";
 import { ConfigSection } from "./sections/configsection";
 import { TeleopSection } from "./sections/teleopsection";
 import { ThemeProvider } from "./components/theme-provider"
- 
+
 import "./App.css";
 
 const sections = [
@@ -22,7 +22,15 @@ const sections = [
     new Section("Configuration", ConfigSection),
 ];
 
+// Just an example how to get env vars on the front-end in Vite (anything with
+// the VITE prefix)
+// See sample.env for descriptions for these:
+const host = import.meta.env.VITE_HOST; // Transitive deployment
+const transitiveId = import.meta.env.VITE_TRANSITIVE_USER;
+const SSLs = import.meta.env.VITE_INSECURE ? '' : 's';
+const transitivePortal = `http${SSLs}://portal.${host}`;
 
+console.log({host, transitiveId, SSLs, transitivePortal});
 
 function App() {
     const [selectedSection, setSelectedSection] = useState<Section>(sections[0]);
