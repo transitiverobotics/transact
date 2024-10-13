@@ -22,12 +22,15 @@ app.get('/hello', (_, res) => {
 
 app.post('/api/getJWT', (req, res) => {
   console.log('getJWT', req.body, req.user);
-  if (req.body.capability?.endsWith('_robot-agent')) {
+  req.body.capability ||= 'ignore';
+
+  if (req.body.capability.endsWith('_robot-agent')) {
     const msg =
       'We do not sign agent tokens. But capability tokens provide read-access.';
     log.warn(msg);
     return res.status(400).send(msg);
   }
+
   const token = jwt.sign({
       ...req.body,
       id: process.env.VITE_TRANSITIVE_USER, // Transitive portal user id
