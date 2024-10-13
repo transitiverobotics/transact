@@ -11,11 +11,9 @@ import { HealthSection } from './sections/healthsection';
 import { ConfigSection } from './sections/configsection';
 import { TeleopSection } from './sections/teleopsection';
 import { ThemeProvider } from './components/theme-provider';
-import { JWTContext, JWTContextProvider } from './components/jwtContext';
+import { FleetContext, FleetContextProvider } from './components/fleetContext';
 
 import _ from 'lodash';
-
-import { useMqttSync } from '@transitive-sdk/utils-web';
 
 import './App.css';
 
@@ -37,28 +35,6 @@ const sections = {
   Configuration: ConfigSection,
 };
 
-const AppWithJWT = () => {
-  const jwt = useContext(JWTContext);
-
-  const { mqttSync, data } = useMqttSync({jwt, id: transitiveId, mqttUrl});
-  console.log(mqttSync);
-  // HERE: now get the list of devices by subscribing to the right agent topic
-  // using mqttSync, and get the list from data
-
-  return <div className='grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] '>
-    <TopBar />
-    <Sidebar sections={sections} />
-    <div className='overflow-y-auto p-4'>
-      <Routes>
-        { _.map(sections, (Element, section) =>
-            <Route key={section}
-              path={section.toLowerCase()}
-              element={<Element />} />)
-        }
-      </Routes>
-    </div>
-  </div>
-};
 
 function App() {
 
@@ -68,9 +44,21 @@ function App() {
         {/* Here we get a JWT for the entire fleet. This allows us to subscribe to
           _robot-agent topics but not publish to them. We use this to get the list
           of devices. */}
-        <JWTContextProvider device='_fleet'>
-          <AppWithJWT />
-        </JWTContextProvider>
+        <FleetContextProvider>
+          <div className='grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] '>
+            <TopBar />
+            <Sidebar sections={sections} />
+            <div className='overflow-y-auto p-4'>
+              <Routes>
+                { _.map(sections, (Element, section) =>
+                    <Route key={section}
+                      path={section.toLowerCase()}
+                      element={<Element />} />)
+                }
+              </Routes>
+            </div>
+          </div>
+        </FleetContextProvider>
       </ThemeProvider>
     </Router>
   );
