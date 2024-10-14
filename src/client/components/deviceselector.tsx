@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import _ from "lodash";
+
 import {
   Select,
   SelectContent,
@@ -6,8 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select"
-
-import { my_fake_devices } from "../models/device";
 
 import { FleetContext } from './fleetContext';
 
@@ -21,8 +21,8 @@ export default function DeviceSelector({onChange}) {
         <SelectValue placeholder="Select a device" />
       </SelectTrigger>
       <SelectContent>
-        {my_fake_devices.map((device, i) => (
-          <SelectItem key={`${device}-${i}`} value={device.name}>{device.name}</SelectItem>
+        {fleet && _.map(fleet, (device, key) => (
+          <SelectItem key={key} value={key}>{key}</SelectItem>
         ))}
       </SelectContent>
     </Select>

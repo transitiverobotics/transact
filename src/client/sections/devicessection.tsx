@@ -1,5 +1,5 @@
-import React from "react";
-import { my_fake_devices } from "../models/device";
+import React, { useContext } from "react";
+
 import {
     Table,
     TableBody,
@@ -10,7 +10,11 @@ import {
     TableRow,
   } from "../components/ui/table";
 
+import { FleetContext } from '../components/fleetContext';
+import _ from "lodash";
+
 export function DevicesSection() {
+    const { fleet } = useContext(FleetContext);
     return (
         <Table>
         <TableCaption>Your devices</TableCaption>
@@ -22,16 +26,15 @@ export function DevicesSection() {
             </TableRow>
         </TableHeader>
         <TableBody>
-            {my_fake_devices.map((device) => (
-            <TableRow key={device.name}>
+            {_.map(fleet, (device, key) => (
+            <TableRow key={key}>
                 <TableCell>
                 <div className="flex items-center gap-2">
-                    <img src={device.type.icon_svg} className="h-6" alt={device.type.name} />
-                    {device.name}
+                    {key}
                 </div>
                 </TableCell>
-                <TableCell>{device.description}</TableCell>
-                <TableCell className="text-right">{device.battery_level}%</TableCell>
+                <TableCell>no description yet</TableCell>
+                <TableCell className="text-right">100%</TableCell>
             </TableRow>
             ))}
         </TableBody>
