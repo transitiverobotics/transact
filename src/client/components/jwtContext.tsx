@@ -9,6 +9,7 @@ export const JWTContextProvider = ({ children, device, capability }) => {
   // Here we get a JWT from the backend
   useEffect(() => {
       const getToken = async () => {
+        if (!device) return
         const result = await fetch('/api/getJWT', {
           method: 'post',
           body: JSON.stringify({ device, capability }),
@@ -19,7 +20,7 @@ export const JWTContextProvider = ({ children, device, capability }) => {
       };
 
       !jwt && getToken();
-    }, []);
+    }, [device]);
 
   return <JWTContext.Provider value={jwt}>
     {jwt && children}
