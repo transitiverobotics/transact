@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from
-  'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Bot, HeartPulse, Joystick, Menu, SlidersHorizontal, Terminal, Video } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from './components/ui/sheet';
+import _ from 'lodash';
 
 import { Sidebar } from './components/sidebar';
-import { TopBar } from './components/topbar';
 import { DevicesSection } from './sections/devicessection';
 import { VideoSection } from './sections/videosection';
 import { TerminalSection } from './sections/terminalsection';
@@ -11,21 +12,50 @@ import { HealthSection } from './sections/healthsection';
 import { ConfigSection } from './sections/configsection';
 import { TeleopSection } from './sections/teleopsection';
 import { ThemeProvider } from './components/theme-provider';
-import { FleetContext, FleetContextProvider } from './components/fleetContext';
-
-import _ from 'lodash';
+import { FleetContextProvider } from './components/fleetContext';
 
 import './App.css';
+import { Button } from './components/ui/button';
 
 
-const sections = {
-  Devices: DevicesSection,
-  Video: VideoSection,
-  Teleoperation: TeleopSection,
-  Terminal: TerminalSection,
-  Health: HealthSection,
-  Configuration: ConfigSection,
-};
+const sections = [
+  {
+    name: 'Devices',
+    route: 'devices',
+    element: DevicesSection,
+    icon: <Bot />,
+  },
+  {
+    name: 'Video',
+    route: 'video',
+    element: VideoSection,
+    icon: <Video />,
+  },
+  {
+    name: 'Teleoperation',
+    route: 'teleoperation',
+    element: TeleopSection,
+    icon: <Joystick />,
+  },
+  {
+    name: 'Terminal',
+    route: 'terminal',
+    element: TerminalSection,
+    icon: <Terminal />,
+  },
+  {
+    name: 'Health',
+    route: 'health',
+    element: HealthSection,
+    icon: <HeartPulse />,
+  },
+  {
+    name: 'Configuration',
+    route: 'configuration',
+    element: ConfigSection,
+    icon: <SlidersHorizontal />,
+  },
+];
 
 
 function App() {
@@ -37,18 +67,32 @@ function App() {
           _robot-agent topics but not publish to them. We use this to get the list
           of devices. */}
         <FleetContextProvider>
-          <div className='grid h-screen grid-rows-[50px_auto] grid-cols-[300px_auto] '>
-            <TopBar />
-            <Sidebar sections={sections} />
-            <div className='overflow-y-auto p-4'>
-              <Routes>
-                { _.map(sections, (Element, section) =>
-                    <Route key={section}
-                      path={section.toLowerCase()}
-                      element={<Element />} />)
-                }
-              </Routes>
+          <div className='grid min-h-screen w-full grid-rows-[40px_auto] md:grid-rows-[auto] md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0 md:hidden"
+                >
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle sections menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="flex flex-col">
+                <Sidebar sections={sections} />
+              </SheetContent>
+            </Sheet>
+            <div className="hidden border-r bg-muted/40 md:block">
+              <Sidebar sections={sections} />
             </div>
+            <Routes>
+              { _.map(sections, (section) =>
+                  <Route key={section.name}
+                    path={section.route}
+                    element={<section.element />} />)
+              }
+            </Routes>
           </div>
         </FleetContextProvider>
       </ThemeProvider>
