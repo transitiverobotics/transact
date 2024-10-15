@@ -21,8 +21,10 @@ export default function DeviceSelector({onChange}) {
         <SelectValue placeholder="Select a device" />
       </SelectTrigger>
       <SelectContent>
-        {fleet && _.map(fleet, (device, key) => (
-          <SelectItem key={key} value={key}>{key}</SelectItem>
+        {fleet && _.map(fleet, (device, deviceId) => (
+          <SelectItem key={deviceId} value={deviceId}>
+            {device?.info?.os?.hostname || deviceId}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>

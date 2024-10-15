@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState, useContext } from "react"
+import _ from 'lodash';
 
 import { JWTContext, JWTContextProvider } from './jwtContext';
 
-import { useMqttSync } from '@transitive-sdk/utils-web';
+import { useMqttSync, mergeVersions } from '@transitive-sdk/utils-web';
 
 const host = import.meta.env.VITE_HOST; // Transitive deployment
 const transitiveId = import.meta.env.VITE_TRANSITIVE_USER;
@@ -16,7 +17,6 @@ const ProviderWithJWT = ({ children }) => {
   const jwt = useContext(JWTContext);
 
   const { mqttSync, data, ready } = useMqttSync({jwt, id: transitiveId, mqttUrl});
-  window.mqttSync = mqttSync;
 
   useEffect(() => {
       mqttSync?.mqtt.connected && mqttSync.subscribe(
@@ -24,8 +24,10 @@ const ProviderWithJWT = ({ children }) => {
         (err) => err && console.warn('Failed to subscribe', err));
     }, [mqttSync]);
 
-  const fleet = data?.[transitiveId];
-  console.log('data', jwt, ready, data);
+  const fleet = {};
+  _.forEach(data?.[transitiveId], (device, id) =>
+    fleet[id] = mergeVersions(device['@transitive-robotics']['_robot-agent'])
+  );
 
   return <FleetContext.Provider value={{ mqttSync, fleet }}>
     {children}
