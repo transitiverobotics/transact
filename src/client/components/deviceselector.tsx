@@ -7,14 +7,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select"
+} from "./ui/select"
 
 import { FleetContext } from './fleetContext';
 
 export default function DeviceSelector({onChange}) {
   const { fleet } = useContext(FleetContext);
 
-  console.log('fleet', fleet);
   return (
     <Select onValueChange={onChange}>
       <SelectTrigger className="w-full">
