@@ -17,14 +17,6 @@ import _ from 'lodash';
 
 import './App.css';
 
-// Just an example how to get env vars on the front-end in Vite (anything with
-// the VITE prefix)
-// See sample.env for descriptions for these:
-const host = import.meta.env.VITE_HOST; // Transitive deployment
-const transitiveId = import.meta.env.VITE_TRANSITIVE_USER;
-const SSLs = import.meta.env.VITE_INSECURE ? '' : 's';
-const transitivePortal = `http${SSLs}://portal.${host}`;
-const mqttUrl = `ws${SSLs}://mqtt.${host}`;
 
 const sections = {
   Devices: DevicesSection,

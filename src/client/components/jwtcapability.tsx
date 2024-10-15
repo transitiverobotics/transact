@@ -11,7 +11,7 @@ const SSLs = insecure ? '' : 's';
 const transitivePortal = `http${SSLs}://portal.${host}`;
 const mqttUrl = `ws${SSLs}://mqtt.${host}`;
 
-const _JWTCapability = (props) => {
+const Capability = (props) => {
   const jwt = useContext(JWTContext);
   return <TransitiveCapability
     jwt={jwt}
@@ -24,7 +24,7 @@ const _JWTCapability = (props) => {
 export function JWTCapability({device, capability, ...props}) {
   return (
     <JWTContextProvider device={device} capability={capability}>
-      <_JWTCapability {...props}/>
+      <Capability {...props}/>
     </JWTContextProvider>
   );
 }
