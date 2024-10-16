@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,6 +11,7 @@ import {
 
 import { FleetContext } from '../components/fleet-context';
 import _ from "lodash";
+import { Heartbeat } from "../components/heartbeat";
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -33,7 +33,7 @@ export function DevicesSection() {
               <TableRow>
                 <TableHead className="w-[200px]">Name</TableHead>
                 <TableHead>Description</TableHead>
-                <TableHead className="text-right">Battery</TableHead>
+                <TableHead className="w-[100px]">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -44,8 +44,23 @@ export function DevicesSection() {
                       {device?.info?.os?.hostname || deviceId}
                     </div>
                   </TableCell>
-                  <TableCell>no description yet</TableCell>
-                  <TableCell className="text-right">100%</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      {device?.info?.os?.lsb?.Description || ""}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center gap-2">
+                      <span>
+                        {device?.status?.heartbeat && (
+                          <Heartbeat
+                            heartbeat={device.status.heartbeat}
+                            refresh={true}
+                          />
+                        )}
+                      </span>
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
