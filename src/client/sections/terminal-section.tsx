@@ -1,8 +1,8 @@
 import React, { useState} from "react";
-import DeviceSelector from "../components/deviceselector";
-import { JWTCapability } from "../components/jwtcapability";
+import DeviceSelector from "../components/device-selector";
+import { JWTCapability } from "../components/jwt-capability";
 
-export function TeleopSection() {
+export function TerminalSection() {
   const [device, setDevice] = useState();
 
   return (
@@ -18,18 +18,7 @@ export function TeleopSection() {
         <div
           className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
         >
-          {device && <JWTCapability
-            device={device}
-            capability={"@transitive-robotics/remote-teleop"}
-            control_rosVersion="1"
-            control_topic="/joy"
-            control_type="sensor_msgs/Joy"
-            count="1"
-            quantizer="25"
-            timeout="1800"
-            type="videotestsrc"
-            />
-          }
+          {device && <JWTCapability device={device} capability={"@transitive-robotics/terminal"}/>}
         </div>
       </main>
     </div>

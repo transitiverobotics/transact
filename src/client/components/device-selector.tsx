@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "./ui/select"
 
-import { FleetContext } from './fleetContext';
+import { FleetContext } from './fleet-context';
 
 export default function DeviceSelector({onChange}) {
   const { fleet } = useContext(FleetContext);

@@ -1,7 +1,7 @@
-import React, { createContext, useEffect, useState, useContext } from "react"
+import React, { createContext, useEffect, useContext } from "react"
 import _ from 'lodash';
 
-import { JWTContext, JWTContextProvider } from './jwtContext';
+import { JWTContext, JWTContextProvider } from './jwt-context';
 
 import { useMqttSync, mergeVersions } from '@transitive-sdk/utils-web';
 

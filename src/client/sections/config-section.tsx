@@ -1,6 +1,6 @@
 import React, { useState} from "react";
-import DeviceSelector from "../components/deviceselector";
-import { JWTCapability } from "../components/jwtcapability";
+import DeviceSelector from "../components/device-selector";
+import { JWTCapability } from "../components/jwt-capability";
 
 export function ConfigSection() {
   const [device, setDevice] = useState();

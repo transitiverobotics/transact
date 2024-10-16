@@ -1,6 +1,6 @@
 import React, { useContext} from "react";
 import { TransitiveCapability } from '@transitive-sdk/utils-web';
-import { JWTContext, JWTContextProvider } from './jwtContext';
+import { JWTContext, JWTContextProvider } from './jwt-context';
 
 // Get env vars on the front-end in Vite (anything with the VITE prefix)
 // See sample.env for descriptions for these:
