@@ -5,14 +5,14 @@ import { Sheet, SheetContent, SheetTrigger } from './components/ui/sheet';
 import _ from 'lodash';
 
 import { Sidebar } from './components/sidebar';
-import { DevicesSection } from './sections/devicessection';
-import { VideoSection } from './sections/videosection';
-import { TerminalSection } from './sections/terminalsection';
-import { HealthSection } from './sections/healthsection';
-import { ConfigSection } from './sections/configsection';
-import { TeleopSection } from './sections/teleopsection';
+import { DevicesSection } from './sections/devices-section';
+import { VideoSection } from './sections/video-section';
+import { TerminalSection } from './sections/terminal-section';
+import { HealthSection } from './sections/health-section';
+import { ConfigSection } from './sections/config-section';
+import { TeleopSection } from './sections/teleop-section';
 import { ThemeProvider } from './components/theme-provider';
-import { FleetContextProvider } from './components/fleetContext';
+import { FleetContextProvider } from './components/fleet-context';
 
 import './App.css';
 import { Button } from './components/ui/button';

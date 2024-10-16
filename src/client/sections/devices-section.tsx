@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "../components/ui/table";
 
-import { FleetContext } from '../components/fleetContext';
+import { FleetContext } from '../components/fleet-context';
 import _ from "lodash";
 
 export function DevicesSection() {

@@ -1,8 +1,8 @@
 import React, { useState} from "react";
-import DeviceSelector from "../components/deviceselector";
-import { JWTCapability } from "../components/jwtcapability";
+import DeviceSelector from "../components/device-selector";
+import { JWTCapability } from "../components/jwt-capability";
 
-export function TerminalSection() {
+export function HealthSection() {
   const [device, setDevice] = useState();
 
   return (
@@ -18,7 +18,7 @@ export function TerminalSection() {
         <div
           className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
         >
-          {device && <JWTCapability device={device} capability={"@transitive-robotics/terminal"}/>}
+          {device && <JWTCapability device={device} capability={"@transitive-robotics/health-monitoring"} delimiters={"undefined"}/>}
         </div>
       </main>
     </div>
