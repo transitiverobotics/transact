@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import _ from 'lodash';
 
 import { Link, useLocation } from "react-router-dom";
@@ -14,14 +14,17 @@ import {
   DropdownMenuTrigger
 } from "./ui/dropdown-menu";
 import { Bot, CircleUser } from "lucide-react";
+import { UserContext } from "./user-context";
+import { getLogger} from '@transitive-sdk/utils-web';
 
+const log = getLogger('Sidebar');
+log.setLevel('debug');
 
 /** Creates a button linking to the provided `to` link. Highlights the button
 * when current location matches that link. */
 const PageLink = ({section}) => {
   const location = useLocation();
   const to = `/${section.route}`;
-  console.log(location.pathname, to);
   return <Link to={to} >
     <Button
       variant={location.pathname == to ? 'secondary' : 'ghost'}
@@ -33,8 +36,8 @@ const PageLink = ({section}) => {
   </Link>;
 };
 
-export function Sidebar({sections})    {
-
+export function Sidebar({sections}){
+  const {session, logout} = useContext(UserContext);
   return (
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -60,8 +63,11 @@ export function Sidebar({sections})    {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          {session && session.user && <DropdownMenuLabel>{session.user}</DropdownMenuLabel>}
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          {session && session.user && <DropdownMenuItem>
+            <Button variant="ghost" onClick={logout}>Logout</Button>
+          </DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
