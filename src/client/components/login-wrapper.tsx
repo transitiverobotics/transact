@@ -30,13 +30,13 @@ export const LoginWrapper = ({children}) => {
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
-                  Name
+                  Username
                 </Label>
                 <Input id="name" value={username} className="col-span-3" onChange={(e) => setUsername(e.target.value)}/>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="username" className="text-right">
-                  Username
+                  Password
                 </Label>
                 <Input id="username" value={password} className="col-span-3" type='password' onChange={(e) => setPassword(e.target.value)}/>
               </div>
