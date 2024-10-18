@@ -1,4 +1,8 @@
 import React, { createContext, useEffect, useState } from "react"
+import { getLogger} from '@transitive-sdk/utils-web';
+
+const log = getLogger('JWTContext');
+log.setLevel('debug');
 
 export const JWTContext = createContext({});
 
@@ -19,7 +23,7 @@ export const JWTContextProvider = ({ children, device, capability }) => {
         setJwt(json.token);
       };
 
-      !jwt && getToken();
+      getToken();
     }, [device]);
 
   return <JWTContext.Provider value={jwt}>

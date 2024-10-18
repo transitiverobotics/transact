@@ -1,6 +1,10 @@
 import React, { useState} from "react";
 import DeviceSelector from "../components/device-selector";
 import { JWTCapability } from "../components/jwt-capability";
+import { getLogger} from '@transitive-sdk/utils-web';
+
+const log = getLogger('VideoSection');
+log.setLevel('debug');
 
 export function VideoSection() {
   const [device, setDevice] = useState();
