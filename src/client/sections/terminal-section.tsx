@@ -1,6 +1,10 @@
 import React, { useState} from "react";
 import DeviceSelector from "../components/device-selector";
 import { JWTCapability } from "../components/jwt-capability";
+import { getLogger} from '@transitive-sdk/utils-web';
+
+const log = getLogger('TerminalSection');
+log.setLevel('debug');
 
 export function TerminalSection() {
   const [device, setDevice] = useState();
