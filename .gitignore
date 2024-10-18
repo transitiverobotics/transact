@@ -146,3 +146,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Accounts and session files
+/src/server/accounts.json
+/src/server/sessions.json

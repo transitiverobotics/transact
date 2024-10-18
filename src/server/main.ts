@@ -20,29 +20,28 @@ app.use(express.json());
 
 // Set up session middleware
 app.use(session({
-  secret: process.env.TR_SESSION_SECRET, // used to sign the session ID cookie
+  secret: process.env.TRANSACT_SESSION_SECRET, // used to sign the session ID cookie
   resave: false,
   saveUninitialized: true,
-  cookie: {domain: `.${process.env.TR_HOST}`, sameSite: 'strict'}
 }));
 
 // if username and password are provided as env vars, create account if it
 // doesn't yet exists. This is used for initial bringup.
-if (process.env.TR_USER && process.env.TR_PASS) {
+if (process.env.TRANSACT_USER && process.env.TRANSACT_PASS) {
   createAccount({
-    name: process.env.TR_USER,
-    password: process.env.TR_PASS,
-    email: process.env.TR_EMAIL || '',
+    name: process.env.TRANSACT_USER,
+    password: process.env.TRANSACT_PASS,
+    email: process.env.TRANSACT_EMAIL || '',
     admin: true
   });
 }
 
-
+// Example of a simple route
 app.get('/hello', (_, res) => {
   res.send('Hello Vite + React + TypeScript!');
 });
 
-/** Login with password */
+// Login with username and password
 app.post('/login', async (req, res) => {
   log.debug('/login:', req.body.name);
 
@@ -71,7 +70,7 @@ app.post('/login', async (req, res) => {
   login(req, res, {account, redirect: false});
 });
 
-
+// Logout the user
 app.post('/logout', async (req, res, next) => {
   log.debug('logout', req.session.user);
   req.session.user = null
@@ -85,25 +84,24 @@ app.post('/logout', async (req, res, next) => {
 });
 
 
-// /** Called by client to refresh the session cookie */
-// app.get('/refresh', requireLogin, async (req, res) => {
-//   log.debug('refresh');
+// Refresh the session cookie
+app.get('/refresh', requireLogin, async (req, res) => {
+  const fail = (error) =>
+    res.clearCookie(COOKIE_NAME).status(401).json({error, ok: false});
 
-//   const fail = (error) =>
-//     res.clearCookie(COOKIE_NAME).status(401).json({error, ok: false});
+  const account = await getAccount(req.session.user._id);
+  if (!account) {
+    log.info('no account for user', req.session.user._id);
+    return fail('invalid session');
+  }
 
-//   const account = await getAccount(req.session.user._id);
-//   if (!account) {
-//     log.info('no account for user', req.session.user._id);
-//     return fail('invalid session');
-//   }
+  login(req, res, {
+    account,
+    redirect: false
+  });
+});
 
-//   login(req, res, {
-//     account,
-//     redirect: false
-//   });
-// });
-
+// Get a JWT token for the current user
 app.post('/api/getJWT', requireLogin, (req, res) => {
   console.log('getJWT', req.body, req.session.user._id);
   req.body.capability ||= 'ignore';
