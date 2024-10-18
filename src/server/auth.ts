@@ -35,6 +35,7 @@ const createCookie = (account: Account, impersonating: boolean = false): string 
 
 export const readAccounts = async (): Promise<Account[]> => {
     if (!fs.existsSync(ACCOUNTS_FILE)) {
+        await fs.promises.writeFile(ACCOUNTS_FILE, '[]');
         return [];
     }
     const data = await fs.promises.readFile(ACCOUNTS_FILE, 'utf-8');
@@ -47,12 +48,9 @@ export const writeAccounts = async (accounts: Account[]): Promise<void> => {
 
 /** simple middleware to check whether the user is logged in */
 export const requireLogin = (req, res, next) => {
-    // log.debug(req.session);
     if (!req.session || !req.session.user) {
-        res.status(401).json({
-        error: 'Not authorized. You need to be logged in. Redirecting to login page.',
-        redirectTo: '/login'
-        });
+        log.debug('not logged in');
+        res.redirect('/login');
     } else {
         next();
     }

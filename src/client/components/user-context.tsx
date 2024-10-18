@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { getLogger, fetchJson, parseCookie }
 from '@transitive-sdk/utils-web';
 import { COOKIE_NAME } from '../../common/constants';
@@ -19,13 +19,13 @@ export const UserContextProvider = ({children}) => {
     setReady(true);
   };
 
-//   useEffect(() => {
-//       // refresh cookie
-//       fetchJson(`/@transitive-robotics/_robot-agent/refresh`, (err, res) => {
-//         !err && log.debug('refreshed');
-//         refresh();
-//       });
-//     }, []);
+  useEffect(() => {
+      // refresh cookie
+      fetchJson(`/refresh`, (err, res) => {
+        !err && log.debug('refreshed');
+        refresh();
+      });
+    }, []);
 
   /** execute the login */
   const login = (user, password) =>
