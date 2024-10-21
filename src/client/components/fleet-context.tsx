@@ -4,11 +4,12 @@ import _ from 'lodash';
 import { JWTContext, JWTContextProvider } from './jwt-context';
 
 import { useMqttSync, mergeVersions } from '@transitive-sdk/utils-web';
+import { UserContext } from "./user-context";
 
 const host = import.meta.env.VITE_HOST; // Transitive deployment
 const transitiveId = import.meta.env.VITE_TRANSITIVE_USER;
 const SSLs = import.meta.env.VITE_INSECURE ? '' : 's';
-const transitivePortal = `http${SSLs}://portal.${host}`;
+// const transitivePortal = `http${SSLs}://portal.${host}`;
 const mqttUrl = `ws${SSLs}://mqtt.${host}`;
 
 export const FleetContext = createContext({});
@@ -36,9 +37,15 @@ const ProviderWithJWT = ({ children }) => {
 
 /** A context with basic fleet data (names, status of devices). */
 export const FleetContextProvider = ({ children }) => {
-  return <JWTContextProvider device='_fleet'>
-    <ProviderWithJWT>
-      {children}
-    </ProviderWithJWT>
-  </JWTContextProvider>;
-};
+  const { session } = useContext(UserContext);
+  return session?.user ? (
+    <JWTContextProvider device='_fleet'>
+      <ProviderWithJWT>
+        {children}
+      </ProviderWithJWT>
+    </JWTContextProvider>
+  ) : (
+    <div>
+      <h1>Not logged in</h1>
+    </div>
+  )};
