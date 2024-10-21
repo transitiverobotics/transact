@@ -25,7 +25,7 @@ log.setLevel('debug');
 * when current location matches that link. */
 const PageLink = ({ section }) => {
   const location = useLocation();
-  const to = `${section.route}`;
+  const to = `/dashboard/${section.route}`;
   return (
     <Link className={'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary w-full '
       + buttonVariants({ variant: location.pathname.includes(to) ? 'secondary' : 'ghost' })} to={to}>

@@ -56,11 +56,13 @@ app.get('/hello', (_, res) => {
 });
 
 // Login with username and password
-app.post('/login', async (req, res) => {
-  log.debug('/login:', req.body.name);
+app.post('/api/login', async (req, res) => {
+  log.debug('/api/login:', req.body.name);
 
-  const fail = (error: string | Error) =>
+  const fail = (error: string | Error) => {
+    log.debug('login failed', req.body.name, error);
     res.clearCookie(COOKIE_NAME).status(401).json({error, ok: false});
+  };
 
   if (!req.body.name || !req.body.password) {
     log.debug('missing credentials', req.body);
@@ -81,12 +83,12 @@ app.post('/login', async (req, res) => {
     return fail('invalid credentials');
   }
 
-  login(req, res, {account, redirect: false});
+  login(req, res, {account, redirect: '/dashboard/devices'});
 });
 
 // Logout the user
-app.post('/logout', async (req, res, next) => {
-  log.debug('logout', req.session.user);
+app.post('/api/logout', async (req, res, next) => {
+  log.debug('/api/logout', req.session.user);
   req.session.user = null
   req.session.save((err) => {
     if (err) next(err);
@@ -99,10 +101,14 @@ app.post('/logout', async (req, res, next) => {
 
 
 // Refresh the session cookie
-app.get('/refresh', requireLogin, async (req, res) => {
+app.get('/api/refresh', async (req, res) => {
   const fail = (error) =>
     res.clearCookie(COOKIE_NAME).status(401).json({error, ok: false});
 
+  if (!req.session.user) {
+    log.info('no session user');
+    return fail('no session');
+  }
   const account = await getAccount(req.session.user._id);
   if (!account) {
     log.info('no account for user', req.session.user._id);
@@ -136,6 +142,7 @@ app.post('/api/getJWT', requireLogin, (req, res) => {
   res.json({token});
 });
 
+app.use('/dashboard/', requireLogin);
 
 const start = async () => {
 

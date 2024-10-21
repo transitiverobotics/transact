@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { getLogger, fetchJson, parseCookie }
 from '@transitive-sdk/utils-web';
 import { COOKIE_NAME } from '@/common/constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const log = getLogger('UserContext');
 log.setLevel('debug');
@@ -11,6 +12,9 @@ export const UserContextProvider = ({children}) => {
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState();
   const [error, setError] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const refresh = () => {
     const cookie = parseCookie(document.cookie);
     // log.debug('cookie', cookie);
@@ -20,29 +24,48 @@ export const UserContextProvider = ({children}) => {
   };
 
   useEffect(() => {
-      // refresh cookie
-      fetchJson(`/refresh`, (err, res) => {
-        !err && log.debug('refreshed');
-        refresh();
-      });
-    }, []);
+    if (location.pathname === '/login') {
+      return;
+    }
+    fetch('/api/refresh', { method: 'GET' })
+    .then(response => {
+      refresh();
+      if (!response.ok) {
+        log.debug('not logged in');
+        navigate('/login');
+      }
+    })
+    .catch(function(err) {
+        console.info(err + " url: " + url);
+    });
+
+  }, []);
 
   /** execute the login */
   const login = (user, password) =>
-    fetchJson(`/login`,
-      (err, res) => {
-        if (err) {
-          log.error(err);
-          setError('Failed to log in, please check your credentials.');
-        } else {
-          setError(null);
-          log.debug('logged in');
-          refresh();
-        }
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      {body: {name: user, password}});
+      body: JSON.stringify({ name: user, password })
+    })
+      .then(response => {
+        if (!response.ok) {
+          setError('Failed to log in, please check your credentials.');
+          throw new Error('Failed to log in');
+        }          
+        setError(null);
+        log.debug('logged in');
+        refresh();
+      })
+      .catch(function(err) {
+        log.error(err);
+        setError('Failed to log in, please check your credentials.');
+      });
 
-  const logout = () => fetchJson('/logout',
+
+  const logout = () => fetchJson('/api/logout',
     (err, res) => {
       if (err) {
         log.error(err);
