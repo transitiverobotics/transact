@@ -5,11 +5,7 @@ import { JWTContext, JWTContextProvider } from './jwt-context';
 // Get env vars on the front-end in Vite (anything with the VITE prefix)
 // See sample.env for descriptions for these:
 const host = import.meta.env.VITE_HOST; // Transitive deployment
-const transitiveId = import.meta.env.VITE_TRANSITIVE_USER;
 const insecure = import.meta.env.VITE_INSECURE
-const SSLs = insecure ? '' : 's';
-const transitivePortal = `http${SSLs}://portal.${host}`;
-const mqttUrl = `ws${SSLs}://mqtt.${host}`;
 
 const Capability = (props) => {
   const jwt = useContext(JWTContext);
