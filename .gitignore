@@ -149,4 +149,4 @@ dist-ssr
 
 # Accounts and session files
 /src/server/accounts.json
-/src/server/sessions.json
+/src/server/sessions/
