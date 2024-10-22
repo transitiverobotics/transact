@@ -43,7 +43,7 @@ export function Sidebar({sections}){
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Bot className="h-6 w-6" />
-          <span className="">SuperRobots</span>
+          <span className="">SuperBots</span>
         </Link>
       </div>
       <ScrollArea className="grow grid items-start px-2 text-sm font-medium lg:px-4">
