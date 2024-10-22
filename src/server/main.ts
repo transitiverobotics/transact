@@ -1,16 +1,19 @@
-import express from "express";
-import ViteExpress from "vite-express";
+import express from 'express';
+import ViteExpress from 'vite-express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-
 import session from 'express-session';
 import bcrypt from 'bcrypt';
-import { createAccount, getAccount, login, requireLogin } from "./auth.js";
-import utils from '@transitive-sdk/utils';
-import { COOKIE_NAME } from "@/common/constants.js";
 import FileStoreFactory from 'session-file-store';
-import path from "path";
+import path from 'path';
+import portfinder from 'portfinder';
+
+import utils from '@transitive-sdk/utils';
+
+import { COOKIE_NAME } from '@/common/constants.js';
+import { createAccount, getAccount, login, requireLogin } from './auth.js';
+
 const FileStore = FileStoreFactory(session);
 
 dotenvExpand.expand(dotenv.config({path: './.env'}))
@@ -18,7 +21,7 @@ dotenvExpand.expand(dotenv.config({path: './.env'}))
 const log = utils.getLogger('main');
 log.setLevel('debug');
 
-const port = process.env.PORT || 3000;
+const basePort = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
@@ -134,6 +137,17 @@ app.post('/api/getJWT', requireLogin, (req, res) => {
 });
 
 
-ViteExpress.listen(app, port, () =>
-  console.log(`Server is listening on port ${port}...`),
-);
+const start = async () => {
+
+  const port = await portfinder.getPortPromise({
+    port: basePort,           // minimum port
+    stopPort: basePort + 1000 // maximum port
+  });
+
+  ViteExpress.listen(app, port, () => {
+    console.log(`Server is listening on port ${port}`);
+    console.log(`Now open: http://localhost:${port}`);
+  });
+}
+
+start();
