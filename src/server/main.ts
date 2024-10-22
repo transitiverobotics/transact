@@ -7,6 +7,9 @@ import bcrypt from 'bcrypt';
 import { createAccount, getAccount, login, requireLogin } from "./auth.js";
 import utils from '@transitive-sdk/utils';
 import { COOKIE_NAME } from "@/common/constants.js";
+import FileStoreFactory from 'session-file-store';
+import path from "path";
+const FileStore = FileStoreFactory(session);
 
 dotenv.config({path: './.env'});
 
@@ -17,9 +20,15 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
+FileStore(session);
+const fileStoreOptions = {
+  path: path.dirname(new URL(import.meta.url).pathname) + '/sessions',
+};
 
+log.debug('fileStoreOptions', fileStoreOptions);
 // Set up session middleware
 app.use(session({
+  store: new FileStore(fileStoreOptions),
   secret: process.env.TRANSACT_SESSION_SECRET, // used to sign the session ID cookie
   resave: false,
   saveUninitialized: true,
