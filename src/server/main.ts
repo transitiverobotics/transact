@@ -2,6 +2,8 @@ import express from "express";
 import ViteExpress from "vite-express";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
+
 import session from 'express-session';
 import bcrypt from 'bcrypt';
 import { createAccount, getAccount, login, requireLogin } from "./auth.js";
@@ -11,7 +13,7 @@ import FileStoreFactory from 'session-file-store';
 import path from "path";
 const FileStore = FileStoreFactory(session);
 
-dotenv.config({path: './.env'});
+dotenvExpand.expand(dotenv.config({path: './.env'}))
 
 const log = utils.getLogger('main');
 log.setLevel('debug');
@@ -21,11 +23,11 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 FileStore(session);
+
 const fileStoreOptions = {
-  path: path.dirname(new URL(import.meta.url).pathname) + '/sessions',
+  path: path.join(process.env.TRANSACT_VAR_DIR + '/sessions'),
 };
 
-log.debug('fileStoreOptions', fileStoreOptions);
 // Set up session middleware
 app.use(session({
   store: new FileStore(fileStoreOptions),
