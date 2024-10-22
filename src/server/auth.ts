@@ -3,15 +3,18 @@ import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
 import utils from '@transitive-sdk/utils';
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
+import utils from '@transitive-sdk/utils';
 
-const SALT_ROUNDS = 10;
-
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
+dotenvExpand.expand(dotenv.config({path: './.env'}))
 
 const log = utils.getLogger('auth');
 log.setLevel('debug');
 
+const SALT_ROUNDS = 10;
+
+const ACCOUNTS_FILE = path.join(process.env.TRANSACT_VAR_DIR, 'accounts.json');
 
 interface Account {
     _id: string;
@@ -75,7 +78,6 @@ export const createAccount = async ({name, password, email, admin, verified}: Cr
     const accounts = await readAccounts();
     const existing = accounts.find(account => account._id === name);
     if (existing) {
-        console.warn(`An account with the name >${name}< already exists`);
         if (cb) {
             cb('An account with that name already exists');
         }
