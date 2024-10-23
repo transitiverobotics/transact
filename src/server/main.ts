@@ -12,7 +12,7 @@ import portfinder from 'portfinder';
 import utils from '@transitive-sdk/utils';
 
 import { COOKIE_NAME } from '@/common/constants.js';
-import { createAccount, getAccount, login, requireLogin } from './auth.js';
+import { createAccount, getAccount, login, requireLogin } from '@/server/auth.js';
 
 const FileStore = FileStoreFactory(session);
 

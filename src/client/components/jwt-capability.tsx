@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext} from 'react';
 import { TransitiveCapability } from '@transitive-sdk/utils-web';
 import { JWTContext, JWTContextProvider } from './jwt-context';
 

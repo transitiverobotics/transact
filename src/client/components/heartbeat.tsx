@@ -42,6 +42,6 @@ export const Heartbeat = ({heartbeat, refresh = true}) => {
       verticalAlign: 'text-bottom'
     }}
     title={`${level.label}: ${date.toLocaleString()}`}>
-    <Comp className="h-4 w-4"/>
+    <Comp className='h-4 w-4'/>
   </span>
 };
