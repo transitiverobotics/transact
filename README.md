@@ -31,7 +31,7 @@ Transact is an example of the kinds of robot fleet management dashboards/cloud p
 We believe that robotics companies face a [make-vs-buy dilemma](https://transitiverobotics.com/blog/make-vs-buy/) and our mission is to solve this by offering a middle-ground: making it easy for them to build their own fleet management system that perfectly meets their needs.
 
 ## Fork
-We encourage you to[fork this repository ](https://github.com/transitiverobotics/transact/fork) and use it as a foundation stone for your awesome robotics app!
+We encourage you to [fork this repository ](https://github.com/transitiverobotics/transact/fork) and use it as a foundation stone for your awesome robotics app!
 
 ## Clone
 Download the app locally from your forked repo (please complete with your real company/app)
@@ -46,14 +46,14 @@ Or you can just clone from here if you're just taking a look
 1. Go to transitiverobotics.com and create your account
 1. Copy `sample.env` file into another file called `.env` in the same directory
 1. Complete it with your own data
-**VITE_TRANSITIVE_USER** is your transitive username
-**JWT_SECRET** you can get it from https://portal.transitiverobotics.com/security 
+   - **VITE_TRANSITIVE_USER** is your transitive username
+   - **JWT_SECRET** you can get it from https://portal.transitiverobotics.com/security 
 1. Run `npm install`
 
 ## Get some robots
 Follow the [instructions](https://transitiverobotics.com/docs/guides/getting-started/ "Getting started") to get your robots on the transitive cloud.
 
-If you just want to see it working quickly you can use our example Docker image, go to the [fleet page](https://portal.transitiverobotics.com/ "Fleet page"), and down to the end of the **Add devices** section and you'll find a command you can grab to run a local Docker robot. (transitive simulated robot coming soon!)
+If you just want to see it working quickly you can use our example Docker image, go to [fleet page](https://portal.transitiverobotics.com/ "Fleet page"), down to the end of the **Add devices** section and you'll find a command you can grab to run a local Docker robot. (transitive simulated robot coming soon!)
 
 Don't forget to add some capabilities to them, you can do it from the [fleet page](https://portal.transitiverobotics.com/ "Fleet page")
 ## Run it
@@ -67,11 +67,11 @@ A nice first step is to find and replace "SuperBots" in the entire project with 
 
 ### ShadCn
 This project uses [ShadCn](https://ui.shadcn.com/) project for components and [Tailwind CSS](https://tailwindcss.com/) for styling.
-You have a lot of beautiful components to choose from in the [ShadCn](https://ui.shadcn.com/docs/components/accordion) collection, you can find the instructions there, but as an example, if you need a Slider component in your app you just need to:
+You have a lot of beautiful components to choose from in the [ShadCn](https://ui.shadcn.com/docs/components/accordion) collection, you can find instructions on how to use them there, but as an example, if you need a Slider component in your app you just need to:
 
     npx shadcn@latest add slider
 
-Once it's installed (it just get's copied in the *client/components/ui* folder) you can use it like this:
+Once it's installed (it just gets copied in the *client/components/ui* folder) you can use it like this:
 
     import { Slider } from "@/components/ui/slider"
     ...
