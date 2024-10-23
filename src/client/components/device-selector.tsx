@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import _ from "lodash";
+import React, { useContext } from 'react';
+import _ from 'lodash';
 
 import {
   Select,
@@ -7,22 +7,26 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
+} from '@components/ui/select'
 
-import { FleetContext } from './fleet-context';
+import { FleetContext } from '@components/fleet-context';
+import { Device } from '@models/device';
+import { getLogger} from '@transitive-sdk/utils-web';
 
-export default function DeviceSelector({onChange}) {
+const log = getLogger('DeviceSelector');
+log.setLevel('debug');
+
+export default function DeviceSelector({ onChange, capability }: { onChange: (value: string) => void; capability: string }) {
   const { fleet } = useContext(FleetContext);
-
   return (
     <Select onValueChange={onChange}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select a device" />
+      <SelectTrigger className='w-full'>
+        <SelectValue placeholder='Select a device' />
       </SelectTrigger>
       <SelectContent>
-        {fleet && _.map(fleet, (device, deviceId) => (
-          <SelectItem key={deviceId} value={deviceId}>
-            {device?.info?.os?.hostname || deviceId}
+        {fleet && _.map(fleet, (device: Device) => (
+          <SelectItem key={device.id} value={device.id} disabled={!device.capabilities.includes(capability)}>
+            {device.name}
           </SelectItem>
         ))}
       </SelectContent>

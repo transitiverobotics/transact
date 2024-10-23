@@ -1,23 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Bot, HeartPulse, Joystick, Menu, SlidersHorizontal, Terminal, Video } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from './components/ui/sheet';
-import { Button } from './components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@components/ui/sheet';
+import { Button } from '@components/ui/button';
 import _ from 'lodash';
 
 import './App.css';
 
-import { Sidebar } from './components/sidebar';
-import { DevicesSection } from './sections/devices-section';
-import { VideoSection } from './sections/video-section';
-import { TerminalSection } from './sections/terminal-section';
-import { HealthSection } from './sections/health-section';
-import { ConfigSection } from './sections/config-section';
-import { TeleopSection } from './sections/teleop-section';
-import { ThemeProvider } from './components/theme-provider';
-import { FleetContextProvider } from './components/fleet-context';
-import { UserContextProvider } from './components/user-context';
-import { LoginWrapper } from './components/login-wrapper';
+import { Sidebar } from '@components/sidebar';
+import { DevicesSection } from '@sections/devices-section';
+import { VideoSection } from '@sections/video-section';
+import { TerminalSection } from '@sections/terminal-section';
+import { HealthSection } from '@sections/health-section';
+import { ConfigSection } from '@sections/config-section';
+import { TeleopSection } from '@sections/teleop-section';
+import { ThemeProvider } from '@components/theme-provider';
+import { FleetContextProvider } from '@components/fleet-context';
+import { UserContextProvider } from '@components/user-context';
+import { LoginWrapper } from '@components/login-wrapper';
 
 import { getLogger} from '@transitive-sdk/utils-web';
 
@@ -81,19 +81,19 @@ function App() {
               <Sheet>
                 <SheetTrigger asChild>
                   <Button
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0 md:hidden"
+                    variant='outline'
+                    size='icon'
+                    className='shrink-0 md:hidden'
                   >
-                    <Menu className="h-5 w-5" />
-                    <span className="sr-only">Toggle sections menu</span>
+                    <Menu className='h-5 w-5' />
+                    <span className='sr-only'>Toggle sections menu</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="flex flex-col">
+                <SheetContent side='left' className='flex flex-col'>
                   <Sidebar sections={sections} />
                 </SheetContent>
               </Sheet>
-              <div className="hidden border-r bg-muted/40 md:block">
+              <div className='hidden border-r bg-muted/40 md:block'>
                 <Sidebar sections={sections} />
               </div>
                 <FleetContextProvider>

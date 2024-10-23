@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { getLogger, fetchJson, parseCookie }
 from '@transitive-sdk/utils-web';
-import { COOKIE_NAME } from '../../common/constants';
+import { COOKIE_NAME } from '@/common/constants';
 
 const log = getLogger('UserContext');
 log.setLevel('debug');

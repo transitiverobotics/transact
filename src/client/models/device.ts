@@ -9,34 +9,31 @@ export class DeviceType {
     }
 }
 
-export class Robot extends DeviceType {
-    constructor() {
-        super("Robot", "A robot that can move around", "/src/client/assets/logo.svg");
-    }
-}
+export const Robot = new DeviceType(
+    'Robot',
+    'A robot that can move around',
+    '/src/client/assets/logo.svg'
+);
 
 export class Device {
     id: string;
     name: string;
-    description: string;
+    os: string;
     type: DeviceType;
-    battery_level: number = 100;
-    constructor(id: string, name: string, description: string, type: DeviceType, battery_level: number = 100) {
+    heartbeat: Date;
+    capabilities: string[];
+    constructor(id: string, name: string, os: string, heartbeat: Date, capabilities: string[] = [], type: DeviceType) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.os = os;
+        this.heartbeat = heartbeat;
+        this.capabilities = capabilities;
         this.type = type;
-        this.battery_level = battery_level;
     }
 }
-
-export const my_fake_devices = [
-    new Device("d_c09317e04e", "Robot1", "First local robot", new Robot(), 80),
-];
 
 export default {
     DeviceType,
     Robot,
     Device,
-    my_fake_devices,
 }

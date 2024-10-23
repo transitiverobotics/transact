@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext, useEffect, useState } from 'react'
 import { getLogger} from '@transitive-sdk/utils-web';
 
 const log = getLogger('JWTContext');
@@ -7,7 +7,7 @@ log.setLevel('debug');
 export const JWTContext = createContext({});
 
 /** Fetch JWT for given device and capability and provide in context. */
-export const JWTContextProvider = ({ children, device, capability }) => {
+export const JWTContextProvider = ({ children, device, capability = '' }) => {
   const [jwt, setJwt] = useState();
 
   // Here we get a JWT from the backend

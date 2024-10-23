@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { useTheme } from "../theme-provider"
+import { useTheme } from "@components/theme-provider"
 import React from "react";
 
 export function ModeToggle() {
