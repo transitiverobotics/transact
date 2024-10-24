@@ -28,22 +28,23 @@ const ProviderWithJWT = ({ children }) => {
         (err) => err && console.warn('Failed to subscribe', err));
     }, [mqttSync]);
 
-  const fleet = [];
-  _.forEach(data?.[transitiveId], (device, id) => {
-    const device_data = mergeVersions(device['@transitive-robotics']['_robot-agent']);
-    const capabilities = [];
-    if (device_data?.status?.runningPackages && device_data?.status?.runningPackages['@transitive-robotics']) {
-      capabilities.push(..._.map(device_data?.status?.runningPackages['@transitive-robotics'], (v, k) => k));
-    }
-    fleet.push(new Device(
-      id,
-      device_data?.info?.os?.hostname || id,
-      device_data?.info?.os?.lsb?.Description || 'Unknown',
-      device_data?.status?.heartbeat || new Date(),
-      capabilities,
-      Robot
-    ));
-  });
+    const fleet = _.map(data?.[transitiveId], (device, id) => {
+      const device_data = mergeVersions(device['@transitive-robotics']['_robot-agent']);
+      const running = device_data?.status?.runningPackages?.['@transitive-robotics'];
+      // To tell whether a capability is running we need to also verify that at least
+      // one of the values in the versions-object is truthy
+      const capabilities = running ? Object.keys(_.pickBy(running,
+          versions => Object.values(versions).some(Boolean))) : [];
+  
+      return new Device(
+        id,
+        device_data?.info?.os?.hostname || id,
+        device_data?.info?.os?.lsb?.Description || 'Unknown',
+        device_data?.status?.heartbeat || new Date(),
+        capabilities,
+        Robot
+      );
+    });
 
   // sort fleet
   fleet.sort((a, b) => a.name.localeCompare(b.name));
