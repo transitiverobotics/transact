@@ -13,6 +13,7 @@ import { FleetContext } from '@components/fleet-context';
 import _ from 'lodash';
 import { Heartbeat } from '@components/heartbeat';
 import { Device } from '@models/device';
+import { Badge } from '@components/ui/badge';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -33,7 +34,8 @@ export function DevicesSection() {
             <TableHeader>
               <TableRow>
                 <TableHead className='w-[200px]'>Name</TableHead>
-                <TableHead>OS</TableHead>
+                <TableHead className='w-[200px]'>OS</TableHead>
+                <TableHead> Running capabilities</TableHead>
                 <TableHead className='w-[100px]'>Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -48,6 +50,13 @@ export function DevicesSection() {
                   <TableCell>
                     <div className='flex items-center gap-2'>
                       {device.os}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className='flex items-center gap-2'>
+                      {_.map(device.capabilities, (capability: string) => (
+                        <Badge> {capability} </Badge>
+                      ))}
                     </div>
                   </TableCell>
                   <TableCell className='text-right'>
