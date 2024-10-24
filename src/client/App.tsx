@@ -103,11 +103,18 @@ function App() {
                   <Routes>
                     <Route path='/' element={<DevicesSection />} />
                     {_.map(sections, (section) => (
-                    <Route
-                      key={section.name}
-                      path={section.route}
-                      element={<section.element />}
-                    />
+                        <>
+                        <Route
+                          key={section.name}
+                          path={section.route}
+                          element={<section.element />}
+                        />
+                        <Route
+                          key={section.name}
+                          path={`${section.route}/:deviceId`}
+                          element={<section.element />}
+                        />
+                      </>
                     ))}
                   </Routes>
                 </FleetContextProvider>
