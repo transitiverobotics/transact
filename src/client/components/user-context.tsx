@@ -84,7 +84,7 @@ export const UserContextProvider = ({children}) => {
         setError(null);
         log.debug('logged out');
         refresh();
-        return navigate('/login');
+        navigate('/login');
       })
       .catch(function(err) {
         log.error(err);
