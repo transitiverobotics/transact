@@ -92,9 +92,15 @@ app.post('/api/logout', async (req, res, next) => {
   log.debug('/api/logout', req.session.user);
   req.session.user = null
   req.session.save((err) => {
-    if (err) next(err);
+    if (err) {
+      log.error('failed to save session', err);
+      next(err);
+    }
     req.session.regenerate((err) => {
-      if (err) next(err);
+      if (err) {
+        log.error('failed to regenerate session', err);
+        next(err);
+      }
       res.clearCookie(COOKIE_NAME).json({status: 'ok'});
     });
   })
