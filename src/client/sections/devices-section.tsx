@@ -55,7 +55,7 @@ export function DevicesSection() {
                   <TableCell>
                     <div className='flex items-center gap-2'>
                       {_.map(device.capabilities, (capability: string) => (
-                        <Badge> {capability} </Badge>
+                        <Badge key={device.id + capability}> {capability} </Badge>
                       ))}
                     </div>
                   </TableCell>
