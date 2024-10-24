@@ -1,16 +1,18 @@
-import React, { useState} from 'react';
+import React from 'react';
 import DeviceSelector from '@components/device-selector';
 import { JWTCapability } from '@components/jwt-capability';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function TeleopSection() {
-  const [device, setDevice] = useState();
+  const { deviceId } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div className='flex flex-col'>
       <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
         <div className='w-full flex-1'>
           <div className='relative'>
-            <DeviceSelector onChange={setDevice} capability='remote-teleop'/>
+            <DeviceSelector deviceId={deviceId} onChange={(id: string) => navigate(`/teleoperation/${id}`)} capability='remote-teleop'/>
           </div>
         </div>
       </header>
@@ -18,8 +20,8 @@ export function TeleopSection() {
         <div
           className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
         >
-          {device && <JWTCapability
-            device={device}
+          {deviceId && <JWTCapability
+            device={deviceId}
             capability={'@transitive-robotics/remote-teleop'}
             control_rosVersion='1'
             control_topic='/joy'
