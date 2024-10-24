@@ -12,7 +12,8 @@ export function ConfigSection() {
       <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
         <div className='w-full flex-1'>
           <div className='relative'>
-            <DeviceSelector deviceId={deviceId} onChange={(id: string) => navigate(`/configuration/${id}`)} capability='configuration-management'/>
+            <DeviceSelector deviceId={deviceId} capability='configuration-management' 
+              onChange={(id: string) => navigate(`/dashboard/configuration/${id}`)} />
           </div>
         </div>
       </header>

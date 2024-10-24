@@ -23,6 +23,7 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login/>} />
             <Route path='/dashboard/*' element={<DashBoard/>} />
+            <Route path='*' element={<Login/>} />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>

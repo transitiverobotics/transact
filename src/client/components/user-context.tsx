@@ -17,26 +17,29 @@ export const UserContextProvider = ({children}) => {
 
   const refresh = () => {
     const cookie = parseCookie(document.cookie);
-    // log.debug('cookie', cookie);
-    cookie[COOKIE_NAME] &&
+    if (cookie[COOKIE_NAME]) {
       setSession(JSON.parse(cookie[COOKIE_NAME]));
+    } else {
+      setSession(null);
+    }
     setReady(true);
   };
 
   useEffect(() => {
-    if (location.pathname === '/login') {
-      return;
-    }
     fetch('/api/refresh', { method: 'GET' })
     .then(response => {
       refresh();
       if (!response.ok) {
+        if (location.pathname === '/login') {
+          return;
+        }
         log.debug('not logged in');
         navigate('/login');
       }
     })
     .catch(function(err) {
-        console.info(err + " url: " + url);
+      log.error(err);
+      navigate('/login');
     });
 
   }, []);
@@ -58,6 +61,7 @@ export const UserContextProvider = ({children}) => {
         setError(null);
         log.debug('logged in');
         refresh();
+        navigate('/dashboard/devices');
       })
       .catch(function(err) {
         log.error(err);
@@ -65,17 +69,27 @@ export const UserContextProvider = ({children}) => {
       });
 
 
-  const logout = () => fetchJson('/api/logout',
-    (err, res) => {
-      if (err) {
-        log.error(err);
-      } else {
-        refresh();
+  const logout = () => fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        log.debug('response', response);
+        if (!response.ok) {
+          log.error('Failed to log out');
+          throw new Error('Failed to log out');
+        }          
+        setError(null);
         log.debug('logged out');
-        location.href = '/';
-      }
-    },
-    {method: 'post'});
+        refresh();
+        return navigate('/login');
+      })
+      .catch(function(err) {
+        log.error(err);
+        setError('Failed to log out');
+      });
 
 //   /** register new account */
 //   const register = (user, password, email) =>
