@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { getLogger, fetchJson, parseCookie }
 from '@transitive-sdk/utils-web';
 import { COOKIE_NAME } from '@/common/constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const log = getLogger('UserContext');
 log.setLevel('debug');
@@ -11,48 +12,84 @@ export const UserContextProvider = ({children}) => {
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState();
   const [error, setError] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const refresh = () => {
     const cookie = parseCookie(document.cookie);
-    // log.debug('cookie', cookie);
-    cookie[COOKIE_NAME] &&
+    if (cookie[COOKIE_NAME]) {
       setSession(JSON.parse(cookie[COOKIE_NAME]));
+    } else {
+      setSession(null);
+    }
     setReady(true);
   };
 
   useEffect(() => {
-      // refresh cookie
-      fetchJson(`/refresh`, (err, res) => {
-        !err && log.debug('refreshed');
-        refresh();
-      });
-    }, []);
+    fetch('/api/refresh', { method: 'GET' })
+    .then(response => {
+      refresh();
+      if (!response.ok) {
+        if (location.pathname === '/login') {
+          return;
+        }
+        log.debug('not logged in');
+        navigate('/login');
+      }
+    })
+    .catch(function(err) {
+      log.error(err);
+      navigate('/login');
+    });
+
+  }, []);
 
   /** execute the login */
   const login = (user, password) =>
-    fetchJson(`/login`,
-      (err, res) => {
-        if (err) {
-          log.error(err);
-          setError('Failed to log in, please check your credentials.');
-        } else {
-          setError(null);
-          log.debug('logged in');
-          refresh();
-        }
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      {body: {name: user, password}});
-
-  const logout = () => fetchJson('/logout',
-    (err, res) => {
-      if (err) {
-        log.error(err);
-      } else {
+      body: JSON.stringify({ name: user, password })
+    })
+      .then(response => {
+        if (!response.ok) {
+          setError('Failed to log in, please check your credentials.');
+          throw new Error('Failed to log in');
+        }          
+        setError(null);
+        log.debug('logged in');
         refresh();
+        navigate('/dashboard/devices');
+      })
+      .catch(function(err) {
+        log.error(err);
+        setError('Failed to log in, please check your credentials.');
+      });
+
+
+  const logout = () => fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        log.debug('response', response);
+        if (!response.ok) {
+          log.error('Failed to log out');
+          throw new Error('Failed to log out');
+        }          
+        setError(null);
         log.debug('logged out');
-        location.href = '/';
-      }
-    },
-    {method: 'post'});
+        refresh();
+        navigate('/login');
+      })
+      .catch(function(err) {
+        log.error(err);
+        setError('Failed to log out');
+      });
 
 //   /** register new account */
 //   const register = (user, password, email) =>

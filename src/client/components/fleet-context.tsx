@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useContext } from 'react'
 import _ from 'lodash';
 
-import { JWTContext, JWTContextProvider } from './jwt-context';
+import { JWTContext, JWTContextProvider } from '@components/jwt-context';
 
 import { useMqttSync, mergeVersions } from '@transitive-sdk/utils-web';
 import { Device, Robot } from '@models/device';
 import { getLogger} from '@transitive-sdk/utils-web';
+import { UserContext } from "@components/user-context";
 
 const log = getLogger('FleetContext');
 log.setLevel('debug');
@@ -56,9 +57,15 @@ const ProviderWithJWT = ({ children }) => {
 
 /** A context with basic fleet data (names, status of devices). */
 export const FleetContextProvider = ({ children }) => {
-  return <JWTContextProvider device='_fleet'>
-    <ProviderWithJWT>
-      {children}
-    </ProviderWithJWT>
-  </JWTContextProvider>;
-};
+  const { session } = useContext(UserContext);
+  return session?.user ? (
+    <JWTContextProvider device='_fleet'>
+      <ProviderWithJWT>
+        {children}
+      </ProviderWithJWT>
+    </JWTContextProvider>
+  ) : (
+    <div>
+      <h1>Not logged in</h1>
+    </div>
+  )};

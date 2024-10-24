@@ -26,12 +26,11 @@ interface Account {
 }
 
 /** given an account (object from DB), create the cookie payload string */
-const createCookie = (account: Account, impersonating: boolean = false): string => {
+const createCookie = (account: Account): string => {
     const payload = {
         user: account._id,
         verified: account.verified,
         admin: account.admin || false,
-        impersonating
     };
     return JSON.stringify(payload);
 };
@@ -51,12 +50,19 @@ export const writeAccounts = async (accounts: Account[]): Promise<void> => {
 
 /** simple middleware to check whether the user is logged in */
 export const requireLogin = (req, res, next) => {
-    if (!req.session || !req.session.user) {
-        log.debug('not logged in');
-        res.redirect('/login');
-    } else {
-        next();
-    }
+  if (req.session && req.session.user) {
+    next();
+    return;
+  }
+  log.debug('not logged in', req.url);
+  if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+    res.status(401).json({
+      error: 'Not authorized. You need to be logged in. Please log out and back in.',
+      ok: false,
+    });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 interface CreateAccountParams {
@@ -111,16 +117,18 @@ export const createAccount = async ({name, password, email, admin, verified}: Cr
 
 
 /** Log the user of this request into the given account. */
-export const  login = (req, res, {account, impersonating = false, redirect = '/'}) => {
+export const  login = (req, res, {account, redirect = '/'}) => {
     // if (req.hostname.startsWith('localhost')) {
     //   delete req.session.cookie.domain;
     // }
     // Write the verified username to the session to indicate logged in status
     req.session.user = account;
-    const cookiedRes = res.cookie(COOKIE_NAME, createCookie(account, impersonating));
+    const cookiedRes = res.cookie(COOKIE_NAME, createCookie(account));
     if (!redirect) {
       cookiedRes.json({status: 'ok'});
     } else {
+      log.debug('redirecting to', redirect);
+      //res.redirect(redirect);
       cookiedRes.redirect(redirect);
     }
   };

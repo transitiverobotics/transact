@@ -13,7 +13,8 @@ export function HealthSection() {
       <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
         <div className='w-full flex-1'>
           <div className='relative'>
-            <DeviceSelector deviceId={deviceId} onChange={(id: string) => navigate(`/health/${id}`)} capability='health-monitoring'/>
+            <DeviceSelector deviceId={deviceId} capability='health-monitoring'
+              onChange={(id: string) => navigate(`/dashboard/health/${id}`)}/>
           </div>
         </div>
       </header>

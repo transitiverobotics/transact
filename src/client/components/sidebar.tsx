@@ -24,7 +24,7 @@ log.setLevel('debug');
 * when current location matches that link. */
 const PageLink = ({section}) => {
   const location = useLocation();
-  const to = `/${section.route}`;
+  const to = `/dashboard/${section.route}`;
   return <Link to={to} >
     <Button
       variant={location.pathname == to ? 'secondary' : 'ghost'}
