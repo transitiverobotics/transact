@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useContext } from 'react'
 import _ from 'lodash';
 
-import { JWTContext, JWTContextProvider } from './jwt-context';
+import { JWTContext, JWTContextProvider } from '@components/jwt-context';
 
 import { useMqttSync, mergeVersions } from '@transitive-sdk/utils-web';
-import { Device, Robot } from '@models/device';
+import { Capability, capabilities, Device, Robot } from '@models/device';
 import { getLogger} from '@transitive-sdk/utils-web';
+
 
 const log = getLogger('FleetContext');
 log.setLevel('debug');
@@ -33,7 +34,7 @@ const ProviderWithJWT = ({ children }) => {
       const running = device_data?.status?.runningPackages?.['@transitive-robotics'];
       // To tell whether a capability is running we need to also verify that at least
       // one of the values in the versions-object is truthy
-      const capabilities = running ? Object.keys(_.pickBy(running,
+      const _capabilities = running ? Object.keys(_.pickBy(running,
           versions => Object.values(versions).some(Boolean))) : [];
   
       return new Device(
@@ -41,7 +42,9 @@ const ProviderWithJWT = ({ children }) => {
         device_data?.info?.os?.hostname || id,
         device_data?.info?.os?.lsb?.Description || 'Unknown',
         device_data?.status?.heartbeat || new Date(),
-        capabilities,
+        _.map(_capabilities, (capability: Capability) => {
+          return capabilities[capability];
+        }),
         Robot
       );
     });

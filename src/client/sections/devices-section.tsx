@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
+import _ from 'lodash';
 
+import { Link } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -8,12 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/table';
+import { badgeVariants } from '@components/ui/badge';
 
+
+import { Capability, Device } from '@models/device';
 import { FleetContext } from '@components/fleet-context';
-import _ from 'lodash';
 import { Heartbeat } from '@components/heartbeat';
-import { Device } from '@models/device';
-import { Badge } from '@components/ui/badge';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -53,10 +55,16 @@ export function DevicesSection() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className='flex items-center gap-2'>
-                      {_.map(device.capabilities, (capability: string) => (
-                        <Badge key={device.id + capability}> {capability} </Badge>
-                      ))}
+                    <div className='flex items-center gap-2 flex-wrap'>
+                      {_.map(device.capabilities, (capability: Capability) => {
+                        return <Link 
+                          key={device.id + capability.display_name}
+                          className={badgeVariants()}
+                          to={`${capability.route}/${device.id}`}>
+                            {capability.display_name}
+                        </Link>
+                      })
+                    }
                     </div>
                   </TableCell>
                   <TableCell className='text-right'>
