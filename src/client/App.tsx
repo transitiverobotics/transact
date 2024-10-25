@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Bot, HeartPulse, Joystick, Menu, SlidersHorizontal, Terminal, Video } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@components/ui/sheet';
 import { Button } from '@components/ui/button';
 import _ from 'lodash';
@@ -9,67 +9,16 @@ import './App.css';
 
 import { Sidebar } from '@components/sidebar';
 import { DevicesSection } from '@sections/devices-section';
-import { VideoSection } from '@sections/video-section';
-import { TerminalSection } from '@sections/terminal-section';
-import { HealthSection } from '@sections/health-section';
-import { ConfigSection } from '@sections/config-section';
-import { TeleopSection } from '@sections/teleop-section';
 import { ThemeProvider } from '@components/theme-provider';
 import { FleetContextProvider } from '@components/fleet-context';
 import { UserContextProvider } from '@components/user-context';
 import { LoginWrapper } from '@components/login-wrapper';
 
 import { getLogger} from '@transitive-sdk/utils-web';
+import { capabilities, Capability} from '@models/device';
 
 const log = getLogger('App');
 log.setLevel('debug');
-
-interface Section {
-  name: string;
-  route: string;
-  element: React.ComponentType;
-  icon: JSX.Element;
-}
-
-const sections: Section[] = [
-  {
-    name: 'Devices',
-    route: 'devices',
-    element: DevicesSection,
-    icon: <Bot />,
-  },
-  {
-    name: 'Video',
-    route: 'video',
-    element: VideoSection,
-    icon: <Video />,
-  },
-  {
-    name: 'Teleoperation',
-    route: 'teleoperation',
-    element: TeleopSection,
-    icon: <Joystick />,
-  },
-  {
-    name: 'Terminal',
-    route: 'terminal',
-    element: TerminalSection,
-    icon: <Terminal />,
-  },
-  {
-    name: 'Health',
-    route: 'health',
-    element: HealthSection,
-    icon: <HeartPulse />,
-  },
-  {
-    name: 'Configuration',
-    route: 'configuration',
-    element: ConfigSection,
-    icon: <SlidersHorizontal />,
-  },
-];
-
 
 function App() {
   return (
@@ -90,32 +39,39 @@ function App() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side='left' className='flex flex-col'>
-                  <Sidebar sections={sections} />
+                  <Sidebar />
                 </SheetContent>
               </Sheet>
               <div className='hidden border-r bg-muted/40 md:block'>
-                <Sidebar sections={sections} />
+                <Sidebar />
               </div>
                 <FleetContextProvider>
                   {/* Here we get a JWT for the entire fleet. This allows us to subscribe to
                     _robot-agent topics but not publish to them. We use this to get the list
                     of devices. */}
-                  <Routes>
-                    <Route path='/' element={<DevicesSection />} />
-                    {_.map(sections, (section) => (
-                      <>
+                  <Routes key='routes'>
+                    <Route key='root' path='*' element={<Navigate to='/devices' />} />
+                    <Route key='devices-section' path='/devices' element={<DevicesSection />} />
+                    {_.map(
+                      _.filter(capabilities, (capability: Capability) => capability.route),
+                      (capability: Capability, capabilityId: string) => (
                         <Route
-                          key={section.name}
-                          path={section.route}
-                          element={<section.element />}
+                          key={capabilityId}
+                          path={capability.route}
+                          element={<capability.section />}
                         />
+                      )
+                    )}
+                    {_.map(
+                      _.filter(capabilities, (capability: Capability) => capability.route),
+                      (capability: Capability, capabilityId: string) => (
                         <Route
-                          key={section.name + 'Device'}
-                          path={`${section.route}/:deviceId`}
-                          element={<section.element />}
+                          key={capabilityId + '_device'}
+                          path={`${capability.route}/:deviceId`}
+                          element={<capability.section />}
                         />
-                      </>
-                    ))}
+                      )
+                    )}                    
                   </Routes>
                 </FleetContextProvider>
             </div>

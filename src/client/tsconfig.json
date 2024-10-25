@@ -6,7 +6,10 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@sections/*": ["sections/*"],
+      "@models/*": ["models/*"],
     }
   }
 }

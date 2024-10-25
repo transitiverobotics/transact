@@ -16,9 +16,11 @@ import { getLogger} from '@transitive-sdk/utils-web';
 const log = getLogger('DeviceSelector');
 log.setLevel('debug');
 
-export default function DeviceSelector({ deviceId, onChange, capability }: { deviceId: string, onChange: (value: string) => void; capability: string }) {
+export default function DeviceSelector({ deviceId, onChange, capability: capabilityId }:
+    { deviceId: string, onChange: (value: string) => void; capabilityId: string }) {
 
   const { fleet } = useContext(FleetContext);
+
   return (
     <Select value={deviceId} onValueChange={onChange}>
       <SelectTrigger className='w-full'>
@@ -26,7 +28,7 @@ export default function DeviceSelector({ deviceId, onChange, capability }: { dev
       </SelectTrigger>
       <SelectContent>
         {fleet && _.map(fleet, (device: Device) => (
-          <SelectItem key={device.id} value={device.id} disabled={!device.capabilities.includes(capability)}>
+          <SelectItem key={device.id} value={device.id} disabled={!_.some(device.capabilities, { id: capabilityId })}>
             {device.name}
           </SelectItem>
         ))}
