@@ -35,15 +35,25 @@ export function DevicesSection() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className='w-[70px]'>Status</TableHead>
                 <TableHead className='w-[200px]'>Name</TableHead>
                 <TableHead className='w-[200px]'>OS</TableHead>
                 <TableHead> Running capabilities</TableHead>
-                <TableHead className='w-[100px]'>Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {_.map(fleet, (device: Device) => (
                 <TableRow key={device.id}>
+                  <TableCell className='text-right'>
+                    <div className='flex items-center gap-2'>
+                      <span>
+                        <Heartbeat
+                          heartbeat={device.heartbeat}
+                          refresh={true}
+                        />
+                      </span>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className='flex items-center gap-2'>
                       {device.name}
@@ -65,16 +75,6 @@ export function DevicesSection() {
                         </Link>
                       })
                     }
-                    </div>
-                  </TableCell>
-                  <TableCell className='text-right'>
-                    <div className='flex items-center gap-2'>
-                      <span>
-                        <Heartbeat
-                          heartbeat={device.heartbeat}
-                          refresh={true}
-                        />
-                      </span>
                     </div>
                   </TableCell>
                 </TableRow>
