@@ -28,7 +28,7 @@ const PageLink = ({ section }) => {
   const to = `${section.route}`;
   return (
     <Link className={'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary w-full '
-      + buttonVariants({ variant: location.pathname === to ? 'secondary' : 'ghost' })} to={to}>
+      + buttonVariants({ variant: location.pathname.includes(to) ? 'secondary' : 'ghost' })} to={to}>
       <section.icon/>
       <span className='grow text-left'>{section.display_name}</span>
     </Link>
