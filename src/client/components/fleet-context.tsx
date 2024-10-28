@@ -34,17 +34,18 @@ const ProviderWithJWT = ({ children }) => {
       const running = device_data?.status?.runningPackages?.['@transitive-robotics'];
       // To tell whether a capability is running we need to also verify that at least
       // one of the values in the versions-object is truthy
-      const _capabilities = running ? Object.keys(_.pickBy(running,
+      const deviceCapabilities = running ? Object.keys(_.pickBy(running,
           versions => Object.values(versions).some(Boolean))) : [];
   
+      // we filter out those capabilities we don't use in this app
+      const deviceKnownCapabilities = deviceCapabilities.filter(capability => capabilities.hasOwnProperty(capability));
+
       return new Device(
         id,
         device_data?.info?.os?.hostname || id,
         device_data?.info?.os?.lsb?.Description || 'Unknown',
         device_data?.status?.heartbeat || new Date(),
-        _.map(_capabilities, (capability: Capability) => {
-          return capabilities[capability];
-        }),
+        deviceKnownCapabilities.map((capability: Capability) => capabilities[capability]),
         Robot
       );
     });
