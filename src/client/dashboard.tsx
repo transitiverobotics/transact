@@ -42,7 +42,7 @@ function DashBoard() {
           _robot-agent topics but not publish to them. We use this to get the list
           of devices. */}
         <Routes key='routes'>
-          <Route key='root' path='*' element={<Navigate to='/dashboard/devices' />} />
+          <Route path='*' element={<Navigate to='devices' />} />
           <Route key='devices-section' path='/devices' element={<DevicesSection />} />
           {_.map(
             _.filter(capabilities, (capability: Capability) => capability.route),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import _ from 'lodash';
 
 import './app.css';
@@ -23,7 +23,7 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login/>} />
             <Route path='/dashboard/*' element={<DashBoard/>} />
-            <Route path='*' element={<Login/>} />
+            <Route path='*' element={<Navigate to='/dashboard/devices' />} />
           </Routes>
         </UserContextProvider>
       </ThemeProvider>

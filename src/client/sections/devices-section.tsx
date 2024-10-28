@@ -70,7 +70,7 @@ export function DevicesSection() {
                         return <Link 
                           key={device.id + capability.display_name}
                           className={badgeVariants()}
-                          to={`${capability.route}/${device.id}`}>
+                          to={`/dashboard${capability.route}/${device.id}`}>
                             {capability.display_name}
                         </Link>
                       })
