@@ -37,16 +37,19 @@ const ProviderWithJWT = ({ children }) => {
       // one of the values in the versions-object is truthy
       const deviceCapabilities = running ? Object.keys(_.pickBy(running,
           versions => Object.values(versions).some(Boolean))) : [];
-  
-      // we filter out those capabilities we don't use in this app
-      const deviceKnownCapabilities = deviceCapabilities.filter(capability => capabilities.hasOwnProperty(capability));
 
       return new Device(
         id,
         device_data?.info?.os?.hostname || id,
         device_data?.info?.os?.lsb?.Description || 'Unknown',
         device_data?.status?.heartbeat || new Date(),
-        deviceKnownCapabilities.map((capability: Capability) => capabilities[capability]),
+        deviceCapabilities.map((capability: Capability) => {
+          if (capabilities.hasOwnProperty(capability)) {
+            return capabilities[capability];
+          } else {
+            return new Capability(capability, capability);
+          }
+        }),
         Robot
       );
     });

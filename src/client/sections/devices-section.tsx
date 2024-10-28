@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/table';
-import { badgeVariants } from '@components/ui/badge';
+import { Badge, badgeVariants } from '@components/ui/badge';
 
 
 import { Capability, Device } from '@models/device';
@@ -67,12 +67,18 @@ export function DevicesSection() {
                   <TableCell>
                     <div className='flex items-center gap-2 flex-wrap'>
                       {_.map(device.capabilities, (capability: Capability) => {
-                        return <Link 
-                          key={device.id + capability.display_name}
-                          className={badgeVariants()}
-                          to={`/dashboard${capability.route}/${device.id}`}>
+                        if (capability?.route) {
+                          return <Link 
+                            key={device.id + capability.display_name}
+                            className={badgeVariants()}
+                            to={`/dashboard${capability.route}/${device.id}`}>
+                              {capability.display_name}
+                          </Link>
+                        } else {
+                          return <Badge variant="secondary" key={device.id + capability.display_name}>
                             {capability.display_name}
-                        </Link>
+                          </Badge>
+                        }
                       })
                     }
                     </div>
