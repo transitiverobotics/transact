@@ -11,6 +11,7 @@ import { FleetContextProvider } from '@components/fleet-context';
 import { getLogger} from '@transitive-sdk/utils-web';
 import { Capability, capabilities } from '@models/device';
 import { DevicesSection } from '@sections/devices-section';
+import { DeviceSection } from '@sections/device-section';
 
 const log = getLogger('DashBoard');
 log.setLevel('debug');
@@ -44,6 +45,7 @@ function DashBoard() {
         <Routes key='routes'>
           <Route path='*' element={<Navigate to='devices' />} />
           <Route key='devices-section' path='/devices' element={<DevicesSection />} />
+          <Route key='device-section' path='/devices/:deviceId' element={<DeviceSection />} />
           {_.map(
             _.filter(capabilities, (capability: Capability) => capability.route),
             (capability: Capability, capabilityId: string) => (

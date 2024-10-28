@@ -16,6 +16,7 @@ import { Badge, badgeVariants } from '@components/ui/badge';
 import { Capability, Device } from '@models/device';
 import { FleetContext } from '@components/fleet-context';
 import { Heartbeat } from '@components/heartbeat';
+import { CircleArrowRight } from 'lucide-react';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -39,6 +40,7 @@ export function DevicesSection() {
                 <TableHead className='w-[200px]'>Name</TableHead>
                 <TableHead className='w-[200px]'>OS</TableHead>
                 <TableHead> Running capabilities</TableHead>
+                <TableHead className='w-[30px]'></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -82,6 +84,11 @@ export function DevicesSection() {
                       })
                     }
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    <Link to={`/dashboard/devices/${device.id}`}>
+                      <CircleArrowRight />
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
