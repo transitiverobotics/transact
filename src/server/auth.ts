@@ -118,17 +118,8 @@ export const createAccount = async ({name, password, email, admin, verified}: Cr
 
 /** Log the user of this request into the given account. */
 export const  login = (req, res, {account, redirect = '/'}) => {
-    // if (req.hostname.startsWith('localhost')) {
-    //   delete req.session.cookie.domain;
-    // }
     // Write the verified username to the session to indicate logged in status
     req.session.user = account;
     const cookiedRes = res.cookie(COOKIE_NAME, createCookie(account));
-    if (!redirect) {
-      cookiedRes.json({status: 'ok'});
-    } else {
-      log.debug('redirecting to', redirect);
-      //res.redirect(redirect);
-      cookiedRes.redirect(redirect);
-    }
+    cookiedRes.json({status: 'ok'});
   };
