@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@components/ui/sheet';
@@ -12,12 +12,17 @@ import { getLogger} from '@transitive-sdk/utils-web';
 import { Capability, capabilities } from '@models/device';
 import { DevicesSection } from '@sections/devices-section';
 import { DeviceSection } from '@sections/device-section';
+import { UserContext } from '@components/user-context';
 
 const log = getLogger('DashBoard');
 log.setLevel('debug');
 
 
 function DashBoard() {
+  const {ready} = useContext(UserContext);
+  if (!ready) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className='grid min-h-screen w-full grid-rows-[40px_auto] md:grid-rows-[auto] md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
       <Sheet>
