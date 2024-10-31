@@ -38,7 +38,7 @@ const PageLink = ({ section }) => {
 export function Sidebar(){
   const {session, logout} = useContext(UserContext);
   return (
-    <div className='flex h-full max-h-screen flex-col gap-2'>
+    <div className='h-full flex-col gap-2 row-span-2 hidden border-r bg-muted/40 md:flex max-h-screen'>
       <div className='flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 gap-4 font-semibold'>
         <Bot className='h-6 w-6' />
         <div>
