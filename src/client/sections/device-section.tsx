@@ -22,7 +22,7 @@ export function DeviceSection() {
     return <div>Loading...</div>;
   }
   return (
-    <div className='flex flex-col'>
+    <>
       <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
         <h1 className='text-xl font-bold'>
           {device.name}
@@ -57,6 +57,6 @@ export function DeviceSection() {
           )}
         </div>
       </main>
-    </div>
+    </>
   );
 }

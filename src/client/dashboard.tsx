@@ -24,7 +24,7 @@ function DashBoard() {
     return <div>Loading...</div>;
   }
   return (
-    <div className='grid min-h-screen w-full grid-rows-[40px_auto] md:grid-rows-[auto] md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
+    <div className='grid min-h-screen max-h-screen grid-rows-[3.5rem_1fr] md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] overflow-hidden'>
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -40,9 +40,7 @@ function DashBoard() {
           <Sidebar />
         </SheetContent>
       </Sheet>
-      <div className="hidden border-r bg-muted/40 md:block">
-        <Sidebar />
-      </div>
+      <Sidebar />
       <FleetContextProvider>
         {/* Here we get a JWT for the entire fleet. This allows us to subscribe to
           _robot-agent topics but not publish to them. We use this to get the list

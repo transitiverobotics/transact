@@ -13,25 +13,24 @@ import {
 import { Badge, badgeVariants } from '@components/ui/badge';
 
 
-import { Capability, Device } from '@models/device';
+import { capabilities, Capability, Device } from '@models/device';
 import { FleetContext } from '@components/fleet-context';
 import { Heartbeat } from '@components/heartbeat';
 import { CircleArrowRight } from 'lucide-react';
+import { Accordion, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { AccordionContent } from '@radix-ui/react-accordion';
+import { JWTCapability } from '@components/jwt-capability';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
   return (
-    <div className='flex flex-col'>
-      <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
-        <div className='w-full flex-1'>
-          <div className='relative'>
-            Your Devices
-          </div>
-        </div>
+    <>
+      <header className='flex items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
       </header>
-      <main className='flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6'>
+      <main className='grid grid-rows-[30px_auto_30px_auto] gap-2 lg:gap-4 lg:p-6 overflow-hidden p-4'>
+        <div className='text-lg'>Your Devices</div>
         <div
-          className='flex flex-1 rounded-lg border border-dashed shadow-sm'
+          className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
         >
           <Table>
             <TableHeader>
@@ -95,7 +94,31 @@ export function DevicesSection() {
             </TableBody>
           </Table>
         </div>
+        <div className='text-lg'>Fleet wide capability status</div>
+        <div
+          className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
+        >
+          <Accordion type="single" collapsible className='w-full'>
+            {_.map(capabilities, (capability: Capability, capabilityId: string) => (
+              <AccordionItem key={capabilityId} value={capabilityId}>
+                <AccordionTrigger>
+                  <div className={'flex items-center gap-3 rounded-lg px-3 py-2 transition-all'}>
+                    <capability.icon/>
+                    <span className=''>{capability.display_name}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <JWTCapability
+                  device={'_fleet'}
+                  capability={`@transitive-robotics/${capability.id}`}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            )
+            )}            
+          </Accordion>
+        </div>
       </main>
-    </div>
+    </>
   );
 }
