@@ -8,6 +8,7 @@ import { FleetContext } from '@components/fleet-context';
 import { CircleArrowLeftIcon } from 'lucide-react';
 import { JWTCapability } from '@components/jwt-capability';
 import { getLogger} from '@transitive-sdk/utils-web';
+import { BatteryIndicator } from '@components/battery-indicator';
 
 const log = getLogger('DeviceSection');
 log.setLevel('debug');
@@ -28,6 +29,7 @@ export function DeviceSection() {
           {device.name}
         </h1>
         <Heartbeat heartbeat={device.heartbeat} refresh={true} />
+        <BatteryIndicator device={device.id} />
         <Link to='/dashboard/devices' className='flex-grow'>
           <CircleArrowLeftIcon className='h-6 w-6 float-right' />
         </Link>        

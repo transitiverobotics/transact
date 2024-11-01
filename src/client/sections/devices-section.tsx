@@ -20,6 +20,7 @@ import { CircleArrowRight } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { AccordionContent } from '@radix-ui/react-accordion';
 import { JWTCapability } from '@components/jwt-capability';
+import { BatteryIndicator } from '@components/battery-indicator';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -36,6 +37,7 @@ export function DevicesSection() {
             <TableHeader>
               <TableRow>
                 <TableHead className='w-[70px]'>Status</TableHead>
+                <TableHead className='w-[70px]'>Battery</TableHead>
                 <TableHead className='w-[200px]'>Name</TableHead>
                 <TableHead className='w-[200px]'>OS</TableHead>
                 <TableHead> Running capabilities</TableHead>
@@ -46,24 +48,19 @@ export function DevicesSection() {
               {_.map(fleet, (device: Device) => (
                 <TableRow key={device.id}>
                   <TableCell className='text-right'>
-                    <div className='flex items-center gap-2'>
-                      <span>
-                        <Heartbeat
-                          heartbeat={device.heartbeat}
-                          refresh={true}
-                        />
-                      </span>
-                    </div>
+                    <Heartbeat
+                      heartbeat={device.heartbeat}
+                      refresh={true}
+                    />
                   </TableCell>
                   <TableCell>
-                    <div className='flex items-center gap-2'>
-                      {device.name}
-                    </div>
+                    <BatteryIndicator device={device.id} />
                   </TableCell>
                   <TableCell>
-                    <div className='flex items-center gap-2'>
-                      {device.os}
-                    </div>
+                    {device.name}
+                  </TableCell>
+                  <TableCell>
+                    {device.os}
                   </TableCell>
                   <TableCell>
                     <div className='flex items-center gap-2 flex-wrap'>
