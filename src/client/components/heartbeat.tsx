@@ -37,9 +37,6 @@ export const Heartbeat = ({heartbeat, refresh = true}) => {
   return <span
     style={{
       color: level.color,
-      marginRight: '1em',
-      fontSize: '0.5rem',
-      verticalAlign: 'text-bottom'
     }}
     title={`${level.label}: ${date.toLocaleString()}`}>
     <Comp className='h-4 w-4'/>
