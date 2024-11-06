@@ -1,0 +1,14 @@
+{
+  "name": "transmock",
+  "version": "1.0.0",
+  "description": "Mock capability",
+  "main": "transMock.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Transitive Robotics",
+  "license": "ISC",
+  "dependencies": {
+    "rosnodejs": "^3.1.0"
+  }
+}
