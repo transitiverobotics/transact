@@ -20,7 +20,8 @@ import { CircleArrowRight } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { AccordionContent } from '@radix-ui/react-accordion';
 import { JWTCapability } from '@components/jwt-capability';
-import { BatteryIndicator } from '@components/battery-indicator';
+import { BatteryIcon } from '@components/battery-icon';
+import { CityLabel } from '@components/city-label';
 
 export function DevicesSection() {
   const { fleet } = useContext(FleetContext);
@@ -28,8 +29,7 @@ export function DevicesSection() {
     <>
       <header className='flex items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
       </header>
-      <main className='grid grid-rows-[30px_auto_30px_auto] gap-2 lg:gap-4 lg:p-6 overflow-hidden p-4'>
-        <div className='text-lg'>Your Devices</div>
+      <main className='grid grid-rows-[auto_auto] gap-2 lg:gap-4 lg:p-6 overflow-hidden p-4'>
         <div
           className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
         >
@@ -39,6 +39,7 @@ export function DevicesSection() {
                 <TableHead className='w-[70px]'>Status</TableHead>
                 <TableHead className='w-[70px]'>Battery</TableHead>
                 <TableHead className='w-[200px]'>Name</TableHead>
+                <TableHead className='w-[200px]'>Location</TableHead>
                 <TableHead className='w-[200px]'>OS</TableHead>
                 <TableHead> Running capabilities</TableHead>
                 <TableHead className='w-[30px]'></TableHead>
@@ -54,10 +55,13 @@ export function DevicesSection() {
                     />
                   </TableCell>
                   <TableCell>
-                    <BatteryIndicator device={device.id} />
+                    <BatteryIcon deviceId={device.id} />
                   </TableCell>
                   <TableCell>
                     {device.name}
+                  </TableCell>
+                  <TableCell>
+                    <CityLabel deviceId={device.id} />
                   </TableCell>
                   <TableCell>
                     {device.os}
@@ -91,7 +95,6 @@ export function DevicesSection() {
             </TableBody>
           </Table>
         </div>
-        <div className='text-lg'>Fleet wide capability status</div>
         <div
           className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
         >
