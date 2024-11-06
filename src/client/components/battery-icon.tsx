@@ -4,22 +4,22 @@ import { CapabilityContext, getLogger} from '@transitive-sdk/utils-web';
 
 import { BatteryWarning, BatteryCharging, BatteryFull, BatteryMedium, BatteryLow, Battery } from 'lucide-react';
 
-const log = getLogger('BatteryIndicator');
+const log = getLogger('BatteryIcon');
 log.setLevel('debug');
 
 
-export const BatteryIndicator = ({device}) => {
+export const BatteryIcon = ({deviceId}) => {
   const capabilityContext = useContext(CapabilityContext);
   const [api, setApi] = useState();
 
   useEffect(() => {
-    const _api = capabilityContext.getAPI(device);
-    log.debug('Subscribing to topic: /battery_status for device', device);
+    const _api = capabilityContext.getAPI(deviceId);
+    log.debug('Subscribing to topic: /battery_status for device', deviceId);
     _api?.subscribe(1, '/battery_status');
     // unsubscribe when React component unmounts
     setApi(_api);
     return () => {
-      log.debug('Unsubscribing from topic: /battery_status for device', device);
+      log.debug('Unsubscribing from topic: /battery_status for device', deviceId);
       _api?.unsubscribe?.(1, '/battery_status');
     }
   }, [capabilityContext?.ready]);

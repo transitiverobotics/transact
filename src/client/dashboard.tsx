@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '@components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@components/ui/sheet';
 import { Button } from '@components/ui/button';
 import _ from 'lodash';
 
@@ -30,17 +30,21 @@ function DashBoard() {
           <Button
             variant="outline"
             size="icon"
-            className="shrink-0 md:hidden"
+            className="shrink-0 md:hidden mt-2 ml-2"
           >
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle sections menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
+          <SheetHeader>
+            <SheetTitle></SheetTitle>
+          </SheetHeader>
           <Sidebar />
         </SheetContent>
       </Sheet>
-      <Sidebar />
+      <div className='hidden md:grid row-span-2'>
+        <Sidebar />
+      </div>
       <FleetContextProvider>
         {/* Here we get a JWT for the entire fleet. This allows us to subscribe to
           _robot-agent topics but not publish to them. We use this to get the list

@@ -7,8 +7,10 @@ import { Heartbeat } from '@components/heartbeat';
 import { FleetContext } from '@components/fleet-context';
 import { CircleArrowLeftIcon } from 'lucide-react';
 import { JWTCapability } from '@components/jwt-capability';
+import { BatteryIcon } from '@components/battery-icon';
+
+import { MapComponent } from '@components/map-component';
 import { getLogger} from '@transitive-sdk/utils-web';
-import { BatteryIndicator } from '@components/battery-indicator';
 
 const log = getLogger('DeviceSection');
 log.setLevel('debug');
@@ -20,7 +22,7 @@ export function DeviceSection() {
 
   const device = _.find(fleet, { id: deviceId }) as Device;
   if (!device) {
-    return <div>Loading...</div>;
+    return <div>Loading Device section</div>;
   }
   return (
     <>
@@ -29,33 +31,42 @@ export function DeviceSection() {
           {device.name}
         </h1>
         <Heartbeat heartbeat={device.heartbeat} refresh={true} />
-        <BatteryIndicator device={device.id} />
+        <BatteryIcon deviceId={device.id} />
         <Link to='/dashboard/devices' className='flex-grow'>
           <CircleArrowLeftIcon className='h-6 w-6 float-right' />
         </Link>        
       </header>
-      <main className='flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6'>
+      <main className='grid p-4 lg:p-6 overflow-hidden'>
         <div
-          className='grid rounded-lg border border-dashed shadow-sm gap-4'
+          className='flex flex-wrap gap-6 p-4 items-stretch content-start rounded-lg border border-dashed shadow-sm overflow-y-auto relative'
         >
+          <div className='h-1/2 basis-1/2 grow'>
+            <MapComponent deviceId={deviceId} /> 
+          </div>
           {_.some(device.capabilities, (capability: Capability) => capability.id === 'remote-teleop') && (
-            <JWTCapability
-              device={deviceId}
-              capability={'@transitive-robotics/remote-teleop'}
-              control_rosVersion='1'
-              control_topic='/joy'
-              control_type='sensor_msgs/Joy'
-              count='1'
-              quantizer='25'
-              timeout='1800'
-              type='videotestsrc'
-            />
-          )}
-          {_.some(device.capabilities, (capability: Capability) => capability.id === 'terminal') && (
-            <JWTCapability device={deviceId} capability={'@transitive-robotics/terminal'} />
+            <div className='h-1/2 grow-0 basis-1/4 shrink'>
+              <JWTCapability
+                device={deviceId}
+                capability={'@transitive-robotics/remote-teleop'}
+                control_rosVersion='1'
+                control_topic='/joy'
+                control_type='sensor_msgs/Joy'
+                count='1'
+                quantizer='25'
+                timeout='1800'
+                type='videotestsrc'
+              />
+            </div>
           )}
           {_.some(device.capabilities, (capability: Capability) => capability.id === 'health-monitoring') && (
-            <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
+            <div className='w-full'>              
+              <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
+            </div>
+          )}
+          {_.some(device.capabilities, (capability: Capability) => capability.id === 'terminal') && (
+            <div className='w-full h-1/4'>
+              <JWTCapability device={deviceId} capability={'@transitive-robotics/terminal'} />
+            </div>
           )}
         </div>
       </main>
