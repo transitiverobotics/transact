@@ -1,8 +1,8 @@
 {
-  "name": "transmock",
+  "name": "mockbot",
   "version": "1.0.0",
   "description": "Mock capability",
-  "main": "transMock.js",
+  "main": "mockBot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
