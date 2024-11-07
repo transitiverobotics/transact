@@ -16,10 +16,9 @@ export const CityLabel = ({deviceId}) => {
       return;
     }
     const _api = capabilityContext.getAPI(deviceId);
-    log.debug()
     _api?.subscribe(1, '/city');
-    // unsubscribe when React component unmounts
     setApi(_api);
+    // unsubscribe when React component unmounts
     return () => {
       log.debug('Unsubscribing from topic: /city for device', deviceId);
       _api?.unsubscribe?.(1, '/city');
