@@ -11,6 +11,7 @@ import { BatteryIcon } from '@components/battery-icon';
 
 import { MapComponent } from '@components/map-component';
 import { getLogger} from '@transitive-sdk/utils-web';
+import { TriggerServiceButton } from '@components/trigger-service-button';
 
 const log = getLogger('DeviceSection');
 log.setLevel('debug');
@@ -58,6 +59,14 @@ export function DeviceSection() {
               />
             </div>
           )}
+          <div className='w-full flex flex-wrap'>
+            <TriggerServiceButton deviceId={deviceId} service={'/dock'} successToast='Arrived to Dock!'>
+              Return to dock
+            </TriggerServiceButton>
+            <TriggerServiceButton deviceId={deviceId} service={'/goto_philz_coffee'} successToast="Arrived to Philz Coffee!">
+              Go to Philz Coffee
+            </TriggerServiceButton>
+          </div>
           {_.some(device.capabilities, (capability: Capability) => capability.id === 'health-monitoring') && (
             <div className='w-full'>              
               <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
