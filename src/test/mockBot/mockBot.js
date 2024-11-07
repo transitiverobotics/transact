@@ -36,7 +36,7 @@ currentBatteryState.power_supply_status = POWER_SUPPLY_STATUS_CHARGING;
 
 
 
-function createTransMockNode() {
+function createMockBotNode() {
   // Register node with ROS master
   rosnodejs.initNode('/transitive_mock_robot')
     .then((rosNode) => {
@@ -89,5 +89,5 @@ function createTransMockNode() {
 
 if (require.main === module) {
   // Invoke Main Talker Function
-  createTransMockNode();
+  createMockBotNode();
 }
