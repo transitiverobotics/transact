@@ -19,6 +19,22 @@ export const heartbeatLevel = (heartbeat) => {
   : 0;
 }
 
+/**
+ * Heartbeat component displays the status of a device's heartbeat signal.
+ * It shows an icon with a color indicating the status and a tooltip with the timestamp.
+ * 
+ * The component will automatically refresh and update its display based on the heartbeat timestamp.
+ * 
+ * @param {number} heartbeat - The timestamp of the heartbeat signal.
+ * @param {boolean} [refresh=true] - Whether the component should automatically refresh.
+ * 
+ * @returns {JSX.Element} The rendered Heartbeat component.
+ * 
+ * @example
+ * ```tsx
+ * <Heartbeat heartbeat={Date.now()} refresh={true} />
+ * ```
+ */
 export const Heartbeat = ({heartbeat, refresh = true}) => {
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
   const [timer, setTimer] = useState();
