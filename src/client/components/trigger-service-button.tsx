@@ -8,6 +8,25 @@ const log = getLogger('DockButton');
 log.setLevel('debug');
 
 
+/**
+ * TriggerServiceButton component triggers a specified service on a device.
+ * 
+ * @param {string} deviceId - The ID of the device on which the service will be triggered.
+ * @param {string} service - The name of the service to be triggered.
+ * @param {React.ReactNode} children - The content to be displayed inside the button.
+ * @param {string} [successToast=''] - Optional success message to be displayed as a toast notification upon successful service call.
+ * 
+ * @returns {JSX.Element} A button that triggers the specified service when clicked.
+ * 
+ * @example
+ * <TriggerServiceButton 
+ *   deviceId="device123" 
+ *   service="startService" 
+ *   successToast="Service started successfully!"
+ * >
+ *   Start Service
+ * </TriggerServiceButton>
+ */
 export const TriggerServiceButton = ({deviceId, service, children, successToast=''}) => {
   const capabilityContext = useContext(CapabilityContext);
   const [api, setApi] = useState();

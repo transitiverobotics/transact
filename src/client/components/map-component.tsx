@@ -34,6 +34,17 @@ log.setLevel('debug');
 
 
 
+/**
+ * MapComponent displays a map centered on a device's GPS coordinates.
+ * It subscribes to a GPS topic for location updates and updates the map accordingly.
+ *
+ * @param {string} deviceId - The ID of the device whose GPS data is displayed.
+ *
+ * @returns {JSX.Element} A JSX element representing the map with markers.
+ *
+ * @example
+ * <MapComponent deviceId="device123" />
+ */
 export const MapComponent = ({deviceId}) => {
   const capabilityContext = useContext(CapabilityContext);
   const [api, setApi] = useState();

@@ -9,6 +9,20 @@ const log = getLogger('BatteryIcon');
 log.setLevel('debug');
 
 
+/**
+ * BatteryIcon component displays the battery status of a device.
+ * It subscribes to the `/battery_status` topic for the given device ID
+ * and displays the battery icon based on the charge level.
+ *
+ * @component
+ * @param {string} deviceId - The ID of the device to get the battery status for
+ *
+ * @example
+ * // Usage example:
+ * <BatteryIcon deviceId="device123" />
+ *
+ * @returns {JSX.Element} The rendered BatteryIcon component
+ */
 export const BatteryIcon = ({deviceId}) => {
   const capabilityContext = useContext(CapabilityContext);
   const [api, setApi] = useState();
