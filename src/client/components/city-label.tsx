@@ -16,18 +16,19 @@ export const CityLabel = ({deviceId}) => {
       return;
     }
     const _api = capabilityContext.getAPI(deviceId);
-    _api?.subscribe(1, '/city');
+    log.debug('Subscribing to topic:', CITY_TOPIC, 'for device:', deviceId);
+    _api?.subscribe(1, CITY_TOPIC);
     setApi(_api);
     // unsubscribe when React component unmounts
     return () => {
-      log.debug('Unsubscribing from topic: /city for device', deviceId);
-      _api?.unsubscribe?.(1, '/city');
+      log.debug('Unsubscribing from topic:', CITY_TOPIC, 'for device:', deviceId);
+      _api?.unsubscribe?.(1, CITY_TOPIC);
     }
   }, [capabilityContext?.ready]);
 
-  const city = api?.deviceData?.ros?.[1].messages?.city?.data;
+  const city = api?.deviceData?.ros?.[1].messages?.location?.city?.data;
 
   return <div>
-    {!city ? 'Loading...' : city}
+    {!city ? '-' : city}
   </div>
 }
