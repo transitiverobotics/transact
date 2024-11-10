@@ -1,24 +1,19 @@
-
-<p  align="right">
-
-<a  href="https://transitiverobotics.com">
-
-<img  src="https://transitiverobotics.com/img/logo.svg"  style="height: 32px">
-
-</a>
-
-</p>
-
-  
+ 
 
 # transAct
 #### An open-source robot fleet management dashboard
-by Transitive Robotics
+by <a href="https://transitiverobotics.com" >
+ <img  src="https://transitiverobotics.com/img/logo.svg"  style="height: 20px; vertical-align: text-top;"> Transitive Robotics
+ </a>
 
------
+
+
+![Screenshot from 2024-11-10 09-26-08](https://github.com/user-attachments/assets/900ab2cf-dcec-495b-b4b9-a2b3f6e845c9)
+
+
   
 
-Transact is an example of the kinds of robot fleet management dashboards/cloud portals/mission control centers/robot operating centers you can build using Transitive. It serves three purposes:
+TransAct is an example of the kinds of robot fleet management dashboards/cloud portals/mission control centers/robot operating centers you can build using Transitive. It serves three purposes:
 
 1. demonstrate how Transitive, the open-source framework, can be used to build web-based robot management systems,
 
