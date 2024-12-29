@@ -29,9 +29,9 @@ export function DevicesSection() {
     <>
       <header className='flex items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
       </header>
-      <main className='grid grid-rows-[auto_auto] gap-2 lg:gap-4 lg:p-6 overflow-hidden p-4'>
+      <main className='grid grid-rows-[auto_auto] gap-2 lg:gap-4 lg:p-6 overflow-y-auto p-4'>
         <div
-          className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
+          className='rounded-lg border border-dashed shadow-sm px-6'
         >
           <Table>
             <TableHeader>
@@ -70,7 +70,7 @@ export function DevicesSection() {
                     <div className='flex items-center gap-2 flex-wrap'>
                       {_.map(device.capabilities, (capability: Capability) => {
                         if (capability?.route) {
-                          return <Link 
+                          return <Link
                             key={device.id + capability.display_name}
                             className={badgeVariants()}
                             to={`/dashboard${capability.route}/${device.id}`}>
@@ -96,7 +96,7 @@ export function DevicesSection() {
           </Table>
         </div>
         <div
-          className='rounded-lg border border-dashed shadow-sm px-6 overflow-y-auto'
+          className='rounded-lg border border-dashed shadow-sm px-6'
         >
           <Accordion type="single" collapsible className='w-full'>
             {_.map(capabilities, (capability: Capability, capabilityId: string) => (
@@ -115,7 +115,7 @@ export function DevicesSection() {
                 </AccordionContent>
               </AccordionItem>
             )
-            )}            
+            )}
           </Accordion>
         </div>
       </main>

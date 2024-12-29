@@ -1,4 +1,4 @@
- 
+
 
 # transAct
 #### An open-source robot fleet management dashboard
@@ -11,7 +11,7 @@ by <a href="https://transitiverobotics.com" >
 ![Screenshot from 2024-11-10 09-26-08](https://github.com/user-attachments/assets/900ab2cf-dcec-495b-b4b9-a2b3f6e845c9)
 
 
-  
+
 
 TransAct is an example of the kinds of robot fleet management dashboards/cloud portals/mission control centers/robot operating centers you can build using Transitive. It serves three purposes:
 
@@ -21,7 +21,7 @@ TransAct is an example of the kinds of robot fleet management dashboards/cloud p
 
 1. serving as a reference implementation that we invite you to fork and build on if you are just starting out building your own system.
 
-  
+
 
 We believe that robotics companies face a [make-vs-buy dilemma](https://transitiverobotics.com/blog/make-vs-buy/) and our mission is to solve this by offering a middle-ground: making it easy for them to build their own fleet management system that perfectly meets their needs.
 
@@ -37,12 +37,12 @@ Or you can just clone from here if you're just taking a look
 
     git clone git@github.com:transitiverobotics/transact.git
 
-## Setup 
+## Setup
 1. Go to transitiverobotics.com and create your account
 1. Copy `sample.env` file into another file called `.env` in the same directory
 1. Complete it with your own data
    - **VITE_TRANSITIVE_USER** is your transitive username
-   - **JWT_SECRET** you can get it from https://portal.transitiverobotics.com/security 
+   - **JWT_SECRET** you can get it from https://portal.transitiverobotics.com/security
 1. Run `npm install`
 
 ## Get some robots
@@ -57,8 +57,8 @@ Don't forget to add some capabilities to them, you can do it from the [fleet pag
 3. Enjoy!
 
 ## Make it your own!
-Code is yours! 
-A nice first step is to find and replace "SuperBots" in the entire project with your own company name 
+Code is yours!
+A nice first step is to find and replace "SuperBots" in the entire project with your own company name
 
 ### ShadCn
 This project uses [ShadCn](https://ui.shadcn.com/) project for components and [Tailwind CSS](https://tailwindcss.com/) for styling.
@@ -76,10 +76,16 @@ Once it's installed (it just gets copied in the *client/components/ui* folder) y
     </div>
 
 (Note the `className="text-xl"`, that's tailwind css)
-  
 
 -----
 
-  
-
 #### This is repository is work in (rapid) progress! Please check back soon again.
+
+-----
+
+#### Attribution
+
+SuperBots Logo: <a href="https://www.flaticon.com/free-icons/robot" title="robot icons">Robot icons created by Freepik - Flaticon</a>
+
+
+
