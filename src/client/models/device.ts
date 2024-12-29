@@ -41,41 +41,41 @@ export class Capability {
 }
 
 export const capabilities = {
-    'remote-teleop': new Capability(
-        'remote-teleop',
-        'Teleoperation',
-        '/teleoperation',
-        TeleopSection,
-        Joystick
-    ),
-    'webrtc-video': new Capability(
-        'webrtc-video',
-        'Video',
-        '/video',
-        VideoSection,
-        Video
-    ),
-    terminal: new Capability(
-        'terminal',
-        'Terminal',
-        '/terminal',
-        TerminalSection,
-        Terminal
-    ),
-    'health-monitoring': new Capability(
-        'health-monitoring',
-        'Health',
-        '/health',
-        HealthSection,
-        HeartPulse
-    ),
-    'configuration-management': new Capability(
-        'configuration-management',
-        'Configuration',
-        '/configuration',
-        ConfigSection,
-        SlidersHorizontal
-    )
+  'webrtc-video': new Capability(
+    'webrtc-video',
+    'Video',
+    '/video',
+    VideoSection,
+    Video
+  ),
+  'remote-teleop': new Capability(
+    'remote-teleop',
+    'Teleoperation',
+    '/teleoperation',
+    TeleopSection,
+    Joystick
+  ),
+  terminal: new Capability(
+    'terminal',
+    'Terminal',
+    '/terminal',
+    TerminalSection,
+    Terminal
+  ),
+  'health-monitoring': new Capability(
+    'health-monitoring',
+    'Health',
+    '/health',
+    HealthSection,
+    HeartPulse
+  ),
+  'configuration-management': new Capability(
+    'configuration-management',
+    'Configuration',
+    '/configuration',
+    ConfigSection,
+    SlidersHorizontal
+  )
 }
 
 export class Device {

@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button, buttonVariants } from '@components/ui/button'
 import { ScrollArea } from '@components/ui/scroll-area';
 import { ModeToggle } from '@components/ui/mode-toggle';
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -40,10 +40,12 @@ export function Sidebar(){
   return (
     <div className='h-full flex-col gap-2 border-r bg-muted/40 flex max-h-screen'>
       <div className='flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 gap-4 font-semibold'>
-        <Bot className='h-6 w-6' />
+        <img src='/superbots_logo.png' className='h-11 w-11' />
         <div>
-          <div>SuperBots</div>
-          <div className='text-xs text-muted-foreground '>transAct</div>
+          {/* <div>SuperBots</div>
+          <div className='text-xs text-muted-foreground '>transAct</div> */}
+          <div className='text-xs text-muted-foreground font-normal'>SuperBots</div>
+          <div className='text-xl'>transAct</div>
         </div>
       </div>
       <ScrollArea className='grow grid items-start px-2 text-sm font-medium lg:px-4'>
@@ -51,7 +53,7 @@ export function Sidebar(){
         {
           _.map(
             _.filter(capabilities, (capability: Capability) => capability.route),
-            (capability: Capability, capabilityId: string) => 
+            (capability: Capability, capabilityId: string) =>
               <PageLink section={capability} key={capabilityId} />
             )
         }
