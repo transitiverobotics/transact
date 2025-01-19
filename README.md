@@ -19,49 +19,54 @@ TransAct is an example of the kinds of robot fleet management dashboards/cloud p
 
 1. demonstrate how to integrate [Transitive Capabilities](https://transitiverobotics.com/caps/) into your own web dashboards, and
 
-1. serving as a reference implementation that we invite you to fork and build on if you are just starting out building your own system.
-
+1. serve as a reference implementation that we invite you to fork and build on if you are just starting out building your own system.
 
 
 We believe that robotics companies face a [make-vs-buy dilemma](https://transitiverobotics.com/blog/make-vs-buy/) and our mission is to solve this by offering a middle-ground: making it easy for them to build their own fleet management system that perfectly meets their needs.
 
-## Fork
+## Setup
+
+### Fork
 We encourage you to [fork this repository ](https://github.com/transitiverobotics/transact/fork) and use it as a foundation stone for your awesome robotics app!
 
-## Clone
-Download the app locally from your forked repo (please complete with your real company/app)
+### Clone
+After forking clone transAct locally (replace `SUPERBOTS` with your github org)
 
-    git clone git@github.com:SUPERBOTS/ROBOTLORD].git
+    git clone git@github.com:SUPERBOTS/transact.git
 
-Or you can just clone from here if you're just taking a look
+Or you can just clone from this repo directly if you're just taking a look
 
     git clone git@github.com:transitiverobotics/transact.git
 
-## Setup
-1. Go to transitiverobotics.com and create your account
-1. Copy `sample.env` file into another file called `.env` in the same directory
-1. Complete it with your own data
-   - **VITE_TRANSITIVE_USER** is your transitive username
-   - **JWT_SECRET** you can get it from https://portal.transitiverobotics.com/security
-1. Run `npm install`
+### Configure
+
+Your local transAct deployment will interface with a Transitive deployment to find robots and capabilities.
+
+1. Go to https://portal.transitiverobotics.com and create an account.
+1. In your local transAct clone, copy `sample.env` file to `.env` and edit it:
+   - **VITE_TRANSITIVE_USER** is your Transitive username.
+   - **JWT_SECRET** is the JWT secret from your Security page: https://portal.transitiverobotics.com/security.
+1. Run `npm install` to install all dependencies.
+
+### Run
+1. Run `npm run dev` to start transAct locally.
+2. Navigate to http://localhost:3000/.
+3. Enjoy!.
+
+At first you won't see any robots on your dashboards. This is because you don't yet have any robots attached to your Transitive account on transitiverobotics.com. We'll do this next.
 
 ## Get some robots
-Follow the [instructions](https://transitiverobotics.com/docs/guides/getting-started/ "Getting started") to get your robots on the transitive cloud.
+Follow the [instructions](https://transitiverobotics.com/docs/guides/getting-started/ "Getting started") to add robots to your Transitive account. If you just want to see it working quickly you can use our example Docker image. Go to [fleet page](https://portal.transitiverobotics.com/ "Fleet page"), down to the end of the **Add devices** section and you'll find a command you can grab to run a local Docker robot.
 
-If you just want to see it working quickly you can use our example Docker image, go to [fleet page](https://portal.transitiverobotics.com/ "Fleet page"), down to the end of the **Add devices** section and you'll find a command you can grab to run a local Docker robot. (transitive simulated robot coming soon!)
+Finally add some capabilities to the devices you've added from the [fleet page](https://portal.transitiverobotics.com/ "Fleet page")
 
-Don't forget to add some capabilities to them, you can do it from the [fleet page](https://portal.transitiverobotics.com/ "Fleet page")
-## Run it
-1. Run `npm run dev`
-2. Navigate to http://localhost:3000/
-3. Enjoy!
+Once these robots show up in the Transitive Portal, they will also appear in your local transAct deployment.
 
 ## Make it your own!
-Code is yours!
-A nice first step is to find and replace "SuperBots" in the entire project with your own company name
+The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company.
 
-### ShadCn
-This project uses [ShadCn](https://ui.shadcn.com/) project for components and [Tailwind CSS](https://tailwindcss.com/) for styling.
+### UI components
+This project uses [ShadCn](https://ui.shadcn.com/) project for UI components and [Tailwind CSS](https://tailwindcss.com/) for styling.
 You have a lot of beautiful components to choose from in the [ShadCn](https://ui.shadcn.com/docs/components/accordion) collection, you can find instructions on how to use them there, but as an example, if you need a Slider component in your app you just need to:
 
     npx shadcn@latest add slider
@@ -76,10 +81,6 @@ Once it's installed (it just gets copied in the *client/components/ui* folder) y
     </div>
 
 (Note the `className="text-xl"`, that's tailwind css)
-
------
-
-#### This is repository is work in (rapid) progress! Please check back soon again.
 
 -----
 
