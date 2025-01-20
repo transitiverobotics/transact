@@ -35,43 +35,50 @@ export function DeviceSection() {
         <BatteryIcon deviceId={device.id} />
         <Link to='/dashboard/devices' className='flex-grow'>
           <CircleArrowLeftIcon className='h-6 w-6 float-right' />
-        </Link>        
+        </Link>
       </header>
       <main className='grid p-4 lg:p-6 overflow-hidden'>
         <div
           className='flex flex-wrap gap-6 p-4 items-stretch content-start rounded-lg border border-dashed shadow-sm overflow-y-auto relative'
         >
-          <div className='h-1/2 basis-1/2 grow'>
-            <MapComponent deviceId={deviceId} /> 
-          </div>
           {_.some(device.capabilities, (capability: Capability) => capability.id === 'remote-teleop') && (
-            <div className='h-1/2 grow-0 basis-1/4 shrink'>
+            <div className='grow-0 basis-1/3 shrink'>
               <JWTCapability
                 device={deviceId}
                 capability={'@transitive-robotics/remote-teleop'}
                 control_rosVersion='1'
                 control_topic='/joy'
                 control_type='sensor_msgs/Joy'
-                count='1'
+                count='3'
                 quantizer='25'
                 timeout='1800'
                 type='videotestsrc'
+                type_1='videotestsrc'
+                type_2='videotestsrc'
               />
             </div>
           )}
-          <div className='w-full flex flex-wrap'>
-            <TriggerServiceButton deviceId={deviceId} service={'/dock'} successToast='Arrived to Dock!'>
-              Return to dock
-            </TriggerServiceButton>
-            <TriggerServiceButton deviceId={deviceId} service={'/goto_philz_coffee'} successToast="Arrived to Philz Coffee!">
-              Go to Philz Coffee
-            </TriggerServiceButton>
-          </div>
-          {_.some(device.capabilities, (capability: Capability) => capability.id === 'health-monitoring') && (
-            <div className='w-full'>              
-              <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
+          <div className='basis-1/3 grow'>
+            <div className='h-1/2'>
+              <div className='h-3/4'>
+                <MapComponent deviceId={deviceId} />
+              </div>
+              <div className='p-2'>
+                <TriggerServiceButton deviceId={deviceId} service={'/dock'} successToast='Arrived to Dock!'>
+                  Return to dock
+                </TriggerServiceButton>
+                <TriggerServiceButton deviceId={deviceId} service={'/goto_philz_coffee'} successToast="Arrived to Philz Coffee!">
+                  Go to Philz Coffee
+                </TriggerServiceButton>
+              </div>
             </div>
-          )}
+            {_.some(device.capabilities, (capability: Capability) => capability.id === 'health-monitoring') && (
+              <div className='h-1/2'>
+                <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
+              </div>
+            )}
+          </div>
+
           {_.some(device.capabilities, (capability: Capability) => capability.id === 'terminal') && (
             <div className='w-full h-1/4'>
               <JWTCapability device={deviceId} capability={'@transitive-robotics/terminal'} />

@@ -44,7 +44,7 @@ export const BatteryIcon = ({deviceId}) => {
   return <TooltipProvider>
     <Tooltip>
       <TooltipTrigger>
-        {!batteryStatus ? <BatteryWarning /> :
+        {!batteryStatus ? <BatteryWarning style={{color: '#777'}}/> :
             batteryStatus.power_supply_status === 1 ? <BatteryCharging /> :
             batteryStatus.charge > 90 ? <BatteryFull /> :
             batteryStatus.charge <= 90 && batteryStatus.charge > 50 ? <BatteryMedium /> :

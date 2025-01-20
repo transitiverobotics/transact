@@ -21,9 +21,9 @@ export function TerminalSection() {
           </div>
         </div>
       </header>
-      <main className='flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6'>
+      <main className='flex flex-col gap-4 p-4 lg:gap-6 lg:p-6'>
         <div
-          className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
+          className='flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
         >
           {deviceId && <JWTCapability device={deviceId} capability={'@transitive-robotics/terminal'}/>}
         </div>

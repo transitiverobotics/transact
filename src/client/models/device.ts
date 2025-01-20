@@ -8,95 +8,100 @@ import { TeleopSection } from '@sections/teleop-section';
 
 
 export class DeviceType {
-    name: string;
-    description: string;
-    icon_svg: string;
-    constructor(name: string, description: string, icon_svg: string) {
-        this.name = name;
-        this.description = description;
-        this.icon_svg = icon_svg;
-    }
+  name: string;
+  description: string;
+  icon_svg: string;
+  constructor(name: string, description: string, icon_svg: string) {
+    this.name = name;
+    this.description = description;
+    this.icon_svg = icon_svg;
+  }
 }
 
 export const Robot = new DeviceType(
-    'Robot',
-    'A robot that can move around',
-    '/src/client/assets/logo.svg'
+  'Robot',
+  'A robot that can move around',
+  '/src/client/assets/logo.svg'
 );
 
 export class Capability {
-    id: string;
-    display_name: string;
-    route: string | null;
-    section: React.ComponentType | null;
-    icon: React.ComponentType | null;
+  id: string;
+  displayName: string;
+  route: string | null;
+  section: React.ComponentType | null;
+  icon: React.ComponentType | null;
 
-    constructor(id: string, display_name: string, route: string | null, section: React.ComponentType | null, icon: React.ComponentType | null) {
-        this.id = id;
-        this.display_name = display_name;
-        this.route = route;
-        this.section = section;
-        this.icon = icon;
-    }
+  constructor({id, displayName, route, section, icon}:
+    { id: string, displayName: string, route: string | null,
+      section: React.ComponentType | null, icon: React.ComponentType | null
+    }) {
+    this.id = id;
+    this.displayName = displayName;
+    this.route = route;
+    this.section = section;
+    this.icon = icon;
+  }
 }
 
 export const capabilities = {
-  'webrtc-video': new Capability(
-    'webrtc-video',
-    'Video',
-    '/video',
-    VideoSection,
-    Video
-  ),
-  'remote-teleop': new Capability(
-    'remote-teleop',
-    'Teleoperation',
-    '/teleoperation',
-    TeleopSection,
-    Joystick
-  ),
-  terminal: new Capability(
-    'terminal',
-    'Terminal',
-    '/terminal',
-    TerminalSection,
-    Terminal
-  ),
-  'health-monitoring': new Capability(
-    'health-monitoring',
-    'Health',
-    '/health',
-    HealthSection,
-    HeartPulse
-  ),
-  'configuration-management': new Capability(
-    'configuration-management',
-    'Configuration',
-    '/configuration',
-    ConfigSection,
-    SlidersHorizontal
-  )
+  'webrtc-video': new Capability({
+    id: 'webrtc-video',
+    displayName: 'Video',
+    route: '/video',
+    section: VideoSection,
+    icon: Video
+  }),
+  'remote-teleop': new Capability({
+    id: 'remote-teleop',
+    displayName: 'Teleoperation',
+    route: '/teleoperation',
+    section: TeleopSection,
+    icon: Joystick
+  }),
+  terminal: new Capability({
+    id: 'terminal',
+    displayName: 'Terminal',
+    route: '/terminal',
+    section: TerminalSection,
+    icon: Terminal
+  }),
+  'health-monitoring': new Capability({
+    id: 'health-monitoring',
+    displayName: 'Health',
+    route: '/health',
+    section: HealthSection,
+    icon: HeartPulse
+  }),
+  'configuration-management': new Capability({
+    id: 'configuration-management',
+    displayName: 'Configuration',
+    route: '/configuration',
+    section: ConfigSection,
+    icon: SlidersHorizontal
+  })
 }
 
 export class Device {
-    id: string;
-    name: string;
-    os: string;
-    type: DeviceType;
-    heartbeat: Date;
-    capabilities: Capability[];
-    constructor(id: string, name: string, os: string, heartbeat: Date, capabilities: Capability[] = [], type: DeviceType) {
-        this.id = id;
-        this.name = name;
-        this.os = os;
-        this.heartbeat = heartbeat;
-        this.capabilities = capabilities;
-        this.type = type;
-    }
+  id: string;
+  name: string;
+  os: string;
+  type: DeviceType;
+  heartbeat: Date;
+  capabilities: Capability[];
+  constructor(id: string, name: string, os: string, heartbeat: Date,
+    capabilities: Capability[] = [], type: DeviceType) {
+
+    this.id = id;
+    this.name = name;
+    this.os = os;
+    this.heartbeat = heartbeat;
+    this.capabilities = capabilities;
+    this.type = type;
+  }
 }
 
 export default {
-    DeviceType,
-    Robot,
-    Device,
+  DeviceType,
+  Robot,
+  Device,
 }

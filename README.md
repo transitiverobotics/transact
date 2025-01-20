@@ -15,7 +15,7 @@ by <a href="https://transitiverobotics.com" >
 
 TransAct is an example of the kinds of robot fleet management dashboards/cloud portals/mission control centers/robot operating centers you can build using Transitive. It serves three purposes:
 
-1. demonstrate how Transitive, the open-source framework, can be used to build web-based robot management systems,
+1. demonstrate how [Transitive](https://github.com/transitiverobotics/transitive) can be used to build web-based robot management systems,
 
 1. demonstrate how to integrate [Transitive Capabilities](https://transitiverobotics.com/caps/) into your own web dashboards, and
 

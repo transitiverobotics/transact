@@ -38,6 +38,7 @@ app.use(session({
   secret: process.env.TRANSACT_SESSION_SECRET, // used to sign the session ID cookie
   resave: false,
   saveUninitialized: true,
+  cookie: {maxAge: 3 * 24 * 60 * 60 * 1000},
 }));
 
 // if username and password are provided as env vars, create account if it
