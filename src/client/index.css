@@ -68,6 +68,28 @@
   }
 }
 
-.transitive-bs-root {
+/* For capability UIs in dark mode */
+.dark .transitive-bs-root {
+  background-color: hsl(var(--muted) / 0.4) !important;
+  color: #f0f0f0;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.dark .transitive-bs-root * {
   background-color: transparent !important;
+  color: #f0f0f0;
+}
+
+.dark .transitive-bs-root.popover, .dark .transitive-bs-root.popover * {
+  background-color: inherit !important;
+  /* color: initial !important; */
+}
+
+.dark .transitive-bs-root .form-check-input {
+  filter: contrast(0.3);
+}
+
+.dark .transitive-bs-root .card-header {
+  color: #d0d0d0;
 }

@@ -57,7 +57,7 @@ export const UserContextProvider = ({children}) => {
         if (!response.ok) {
           setError('Failed to log in, please check your credentials.');
           throw new Error('Failed to log in');
-        }          
+        }
         setError(null);
         log.debug('logged in');
         refresh();
@@ -80,7 +80,7 @@ export const UserContextProvider = ({children}) => {
         if (!response.ok) {
           log.error('Failed to log out');
           throw new Error('Failed to log out');
-        }          
+        }
         setError(null);
         log.debug('logged out');
         refresh();

@@ -80,7 +80,10 @@ export const getAccount = async (name: string): Promise<Account | void> => {
     return accounts.find(account => account._id === name);
 }
 
-export const createAccount = async ({name, password, email, admin, verified}: CreateAccountParams, cb?: Callback): Promise<Account | void> => {
+export const createAccount = async (
+    {name, password, email, admin, verified}: CreateAccountParams,
+    cb?: Callback): Promise<Account | void> => {
+
     const accounts = await readAccounts();
     const existing = accounts.find(account => account._id === name);
     if (existing) {

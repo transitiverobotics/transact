@@ -30,7 +30,7 @@ const PageLink = ({ section }) => {
     <Link className={'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary w-full '
       + buttonVariants({ variant: location.pathname.includes(to) ? 'secondary' : 'ghost' })} to={to}>
       <section.icon/>
-      <span className='grow text-left'>{section.display_name}</span>
+      <span className='grow text-left'>{section.displayName}</span>
     </Link>
   );
 };
@@ -49,7 +49,7 @@ export function Sidebar(){
         </div>
       </div>
       <ScrollArea className='grow grid items-start px-2 text-sm font-medium lg:px-4'>
-        <PageLink section={{route: '/devices', icon: Bot, display_name: 'Devices'}} key='devices-link' />
+        <PageLink section={{route: '/devices', icon: Bot, displayName: 'Devices'}} key='devices-link' />
         {
           _.map(
             _.filter(capabilities, (capability: Capability) => capability.route),

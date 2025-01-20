@@ -16,7 +16,6 @@ import { Badge, badgeVariants } from '@components/ui/badge';
 import { capabilities, Capability, Device } from '@models/device';
 import { FleetContext } from '@components/fleet-context';
 import { Heartbeat } from '@components/heartbeat';
-import { CircleArrowRight } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { AccordionContent } from '@radix-ui/react-accordion';
 import { JWTCapability } from '@components/jwt-capability';
@@ -36,13 +35,12 @@ export function DevicesSection() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-[70px]'>Status</TableHead>
-                <TableHead className='w-[70px]'>Battery</TableHead>
-                <TableHead className='w-[200px]'>Name</TableHead>
-                <TableHead className='w-[200px]'>Location</TableHead>
-                <TableHead className='w-[200px]'>OS</TableHead>
-                <TableHead> Running capabilities</TableHead>
-                <TableHead className='w-[30px]'></TableHead>
+                <TableHead className='w-[5em]'>Status</TableHead>
+                <TableHead className='w-[5em]'>Battery</TableHead>
+                <TableHead className='w-[10em]'>Name</TableHead>
+                <TableHead className='w-[10em]'>Location</TableHead>
+                <TableHead className='w-[10em]'>OS</TableHead>
+                <TableHead>Running capabilities</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -58,7 +56,9 @@ export function DevicesSection() {
                     <BatteryIcon deviceId={device.id} />
                   </TableCell>
                   <TableCell>
-                    {device.name}
+                    <Link to={`/dashboard/devices/${device.id}`}>
+                      {device.name}
+                    </Link>
                   </TableCell>
                   <TableCell>
                     <CityLabel deviceId={device.id} />
@@ -71,24 +71,19 @@ export function DevicesSection() {
                       {_.map(device.capabilities, (capability: Capability) => {
                         if (capability?.route) {
                           return <Link
-                            key={device.id + capability.display_name}
+                            key={device.id + capability.displayName}
                             className={badgeVariants()}
                             to={`/dashboard${capability.route}/${device.id}`}>
-                              {capability.display_name}
+                              {capability.displayName}
                           </Link>
                         } else {
-                          return <Badge variant="secondary" key={device.id + capability.display_name}>
-                            {capability.display_name}
+                          return <Badge variant="secondary" key={device.id + capability.displayName}>
+                            {capability.displayName}
                           </Badge>
                         }
                       })
                     }
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <Link to={`/dashboard/devices/${device.id}`}>
-                      <CircleArrowRight />
-                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
@@ -104,7 +99,7 @@ export function DevicesSection() {
                 <AccordionTrigger>
                   <div className={'flex items-center gap-3 rounded-lg px-3 py-2 transition-all'}>
                     <capability.icon/>
-                    <span className=''>{capability.display_name}</span>
+                    <span className=''>{capability.displayName}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
