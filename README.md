@@ -63,7 +63,7 @@ Finally add some capabilities to the devices you've added from the [fleet page](
 Once these robots show up in the Transitive Portal, they will also appear in your local transAct deployment.
 
 ## Make it your own!
-The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company.
+The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company. After that you'll probably want to go through the sections in `src/client/sections` and edit the properties of the embedded Transitive capabilities to fit your needs, e.g., choose the right video sources for webrtc-video and remote-teleop. The easiest way to do this is to go to your Transitive Portal page, open the capability there, configure it, and then get the pre-configured React code from the "Embed" modal.
 
 ### UI components
 This project uses [ShadCn](https://ui.shadcn.com/) project for UI components and [Tailwind CSS](https://tailwindcss.com/) for styling.
@@ -73,14 +73,22 @@ You have a lot of beautiful components to choose from in the [ShadCn](https://ui
 
 Once it's installed (it just gets copied in the *client/components/ui* folder) you can use it like this:
 
-    import { Slider } from "@/components/ui/slider"
-    ...
-    <div>
-	    <Label  htmlFor="password"  className="text-xl"> Robot happiness </Label>
-	    <Slider id="robot-happiness" defaultValue={[100]} max={100} step={1} />
-    </div>
+```jsx
+import { Slider } from "@/components/ui/slider"
+...
+<div>
+  <Label  htmlFor="password"  className="text-xl"> Robot happiness </Label>
+  <Slider id="robot-happiness" defaultValue={[100]} max={100} step={1} />
+</div>
+```
 
-(Note the `className="text-xl"`, that's tailwind css)
+Note that the `className="text-xl"` is from [tailwindcss](https://tailwindcss.com/docs/font-size).
+
+
+## Getting help
+
+Questions? [Join our Slack](https://transitiverobotics.com/slack) and we'll try to help. For suggestions, please open issues or pull-requests.
+
 
 -----
 
