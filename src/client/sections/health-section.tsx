@@ -21,6 +21,7 @@ export function HealthSection() {
       <main className='flex flex-col gap-4 p-4 lg:gap-6 lg:p-6'>
         <div
           className='flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
+          data-bs-theme="dark"
         >
           {deviceId && <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>}
         </div>
