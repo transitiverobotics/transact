@@ -27,7 +27,8 @@ export function DeviceSection() {
   }
   return (
     <>
-      <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
+      <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4
+        lg:h-[60px] lg:px-6'>
         <h1 className='text-xl font-bold'>
           {device.name}
         </h1>
@@ -37,52 +38,62 @@ export function DeviceSection() {
           <CircleArrowLeftIcon className='h-6 w-6 float-right' />
         </Link>
       </header>
-      <main className='grid p-4 lg:p-6 overflow-hidden'>
+
+      <main className='grid p-4 lg:p-6 overflow-y-auto'>
         <div
-          className='flex flex-wrap gap-6 p-4 items-stretch content-start rounded-lg border border-dashed shadow-sm overflow-y-auto relative'
+          className='flex flex-wrap gap-6 p-4 items-stretch content-start
+          rounded-lg border border-dashed shadow-sm relative'
         >
-          {_.some(device.capabilities, (capability: Capability) => capability.id === 'remote-teleop') && (
-            <div className='grow-0 basis-1/3 shrink'>
-              <JWTCapability
-                device={deviceId}
-                capability={'@transitive-robotics/remote-teleop'}
-                control_rosVersion='1'
-                control_topic='/joy'
-                control_type='sensor_msgs/Joy'
-                count='3'
-                quantizer='25'
-                timeout='1800'
-                type='videotestsrc'
-                type_1='videotestsrc'
-                type_2='videotestsrc'
-              />
-            </div>
-          )}
-          <div className='basis-1/3 grow'>
-            <div className='h-1/2'>
-              <div className='h-3/4'>
+          {_.some(device.capabilities, (capability: Capability) =>
+            capability.id === 'remote-teleop') && (
+              <div className='grow-0 basis-3/5 shrink m-auto'>
+                <JWTCapability
+                  device={deviceId}
+                  capability={'@transitive-robotics/remote-teleop'}
+                  control_rosVersion='1'
+                  control_topic='/joy'
+                  control_type='sensor_msgs/Joy'
+                  count='2'
+                  quantizer='25'
+                  timeout='1800'
+                  type='videotestsrc'
+                  type_1='videotestsrc'
+                  />
+              </div>
+            )}
+
+          <div className='grow'>
+            <div>
+              <div className='h-80'>
                 <MapComponent deviceId={deviceId} />
               </div>
               <div className='p-2'>
-                <TriggerServiceButton deviceId={deviceId} service={'/dock'} successToast='Arrived to Dock!'>
+                <TriggerServiceButton deviceId={deviceId} service={'/dock'}
+                  successToast='Arrived to Dock!'>
                   Return to dock
-                </TriggerServiceButton>
-                <TriggerServiceButton deviceId={deviceId} service={'/goto_philz_coffee'} successToast="Arrived to Philz Coffee!">
+                </TriggerServiceButton>&nbsp;
+                <TriggerServiceButton deviceId={deviceId} service={'/goto_philz_coffee'}
+                  successToast="Arrived to Philz Coffee!">
                   Go to Philz Coffee
                 </TriggerServiceButton>
               </div>
             </div>
-            {_.some(device.capabilities, (capability: Capability) => capability.id === 'health-monitoring') && (
-              <div className='h-1/2'>
-                <JWTCapability device={deviceId} capability={'@transitive-robotics/health-monitoring'} delimiters={'undefined'}/>
-              </div>
+            {_.some(device.capabilities, (capability: Capability) =>
+              capability.id === 'health-monitoring') && (
+                <div>
+                  <JWTCapability device={deviceId}
+                    capability={'@transitive-robotics/health-monitoring'}
+                    delimiters={'undefined'}/>
+                </div>
             )}
           </div>
 
-          {_.some(device.capabilities, (capability: Capability) => capability.id === 'terminal') && (
-            <div className='w-full h-1/4'>
-              <JWTCapability device={deviceId} capability={'@transitive-robotics/terminal'} />
-            </div>
+          {_.some(device.capabilities, (capability: Capability) =>
+            capability.id === 'terminal') && (
+              <div className='w-full h-1/4'>
+                <JWTCapability device={deviceId}
+                  capability={'@transitive-robotics/terminal'} />
+              </div>
           )}
         </div>
       </main>

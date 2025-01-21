@@ -93,3 +93,27 @@
 .dark .transitive-bs-root .card-header {
   color: #d0d0d0;
 }
+
+/* Capability specific styling */
+
+.webrtc-video-wrapper video {
+  display: inline;
+}
+
+.webrtc-video-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.remote-teleop-wrapper .controls-wrapper {
+  justify-content: center;
+}
+
+.terminal-wrapper .xterm .xterm-viewport {
+  overflow-y: hidden;
+}
+
+health-monitoring-device svg {
+  display: inline;
+}
+
