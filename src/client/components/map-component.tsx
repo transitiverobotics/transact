@@ -10,7 +10,7 @@ const botIcon = new L.Icon({
     iconUrl: botSvg,
     iconRetinaUrl: botSvg,
     popupAnchor:  [-0, -0],
-    iconSize: [45,52],     
+    iconSize: [45,52],
 });
 
 const coffeeUrl = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNvZmZlZSI+PHBhdGggZD0iTTEwIDJ2MiIvPjxwYXRoIGQ9Ik0xNCAydjIiLz48cGF0aCBkPSJNMTYgOGExIDEgMCAwIDEgMSAxdjhhNCA0IDAgMCAxLTQgNEg3YTQgNCAwIDAgMS00LTRWOWExIDEgMCAwIDEgMS0xaDE0YTQgNCAwIDEgMSAwIDhoLTEiLz48cGF0aCBkPSJNNiAydjIiLz48L3N2Zz4=';
@@ -18,7 +18,7 @@ const coffeeIcon = new L.Icon({
     iconUrl: coffeeUrl,
     iconRetinaUrl: coffeeUrl,
     popupAnchor:  [-0, -0],
-    iconSize: [32,45],     
+    iconSize: [32,45],
 });
 
 const plugUrl = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXBsdWciPjxwYXRoIGQ9Ik0xMiAyMnYtNSIvPjxwYXRoIGQ9Ik05IDhWMiIvPjxwYXRoIGQ9Ik0xNSA4VjIiLz48cGF0aCBkPSJNMTggOHY1YTQgNCAwIDAgMS00IDRoLTRhNCA0IDAgMCAxLTQtNFY4WiIvPjwvc3ZnPg==';
@@ -26,13 +26,24 @@ const plugIcon = new L.Icon({
     iconUrl: plugUrl,
     iconRetinaUrl: plugUrl,
     popupAnchor:  [-0, -0],
-    iconSize: [32,45],     
+    iconSize: [32,45],
 });
 
 const log = getLogger('MapComponent');
 log.setLevel('debug');
 
-
+/** Map child component that zooms the map to the given location when present,
+* reactive. */
+let zoomed = false;
+const MapZoomer = ({latitude, longitude, once = false}) => {
+  if ((!once || !zoomed) && (latitude || longitude)) {
+    const map = useMap();
+    console.log('map center:', map.getCenter(), 'set', latitude, longitude);
+    map.flyTo(L.latLng(latitude, longitude), 16);
+    zoomed = true;
+  }
+  return null;
+}
 
 /**
  * MapComponent displays a map centered on a device's GPS coordinates.
@@ -65,25 +76,25 @@ export const MapComponent = ({deviceId}) => {
   }, [capabilityContext?.ready]);
 
   const gpsData = api?.deviceData?.ros?.[1].messages?.gps?.fix;
-  if (!gpsData?.latitude || !gpsData?.longitude) {
-    return <div>Loading Map</div>;
-  }
 
   return (
-    <MapContainer center={[gpsData.latitude, gpsData.longitude]} zoom={16} className='w-full h-full'>
+    <MapContainer center={[0, 0]} zoom={1} className='w-full h-full'>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker 
+      <MapZoomer latitude={gpsData?.latitude} longitude={gpsData?.longitude}
+        once={true}/>
+
+      <Marker
         position={[37.451889, -122.176823]}
         icon={plugIcon}
-      >      
+      >
         <Popup>
           Dock
         </Popup>
       </Marker>
-      <Marker 
+      <Marker
         position={[37.454392, -122.1826635]}
         icon={coffeeIcon}
       >
@@ -91,18 +102,19 @@ export const MapComponent = ({deviceId}) => {
           Philz Coffee
         </Popup>
       </Marker>
-      <ReactLeafletDriftMarker
-        // if position changes, marker will drift its way to new position
-        position={[gpsData.latitude, gpsData.longitude]}
-        // time in ms that marker will take to reach its destination
-        duration={1000}
-        icon={botIcon}
-      >
-        <Popup>
-          Latitude: {gpsData.latitude}<br />
-          Longitude: {gpsData.longitude}<br />
-        </Popup>
-      </ReactLeafletDriftMarker>
+      {(gpsData?.latitude || gpsData?.longitude) &&
+        <ReactLeafletDriftMarker
+          // if position changes, marker will drift its way to new position
+          position={[gpsData.latitude, gpsData.longitude]}
+          // time in ms that marker will take to reach its destination
+          duration={1000}
+          icon={botIcon}
+        >
+          <Popup>
+            Latitude: {gpsData.latitude}<br />
+            Longitude: {gpsData.longitude}<br />
+          </Popup>
+        </ReactLeafletDriftMarker>}
     </MapContainer>
   );
 }
