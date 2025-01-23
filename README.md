@@ -24,10 +24,11 @@ TransAct is an example of the kinds of robot fleet management dashboards/cloud p
 We believe that robotics companies face a [make-vs-buy dilemma](https://transitiverobotics.com/blog/make-vs-buy/) and our mission is to solve this by offering a middle-ground: making it easy for them to build their own fleet management system that perfectly meets their needs.
 
 In the standard configuration it embeds several capabilities:
-- Remote Teleop, to control your robot with low-latency video from anywhere in the world,
-- Terminal, for web-based shell access,
-- Configuration Management, for editing config files on your fleet hierarchically (with fleet defaults and robot specific overwrites), and
-- Health Monitoring, for monitoring device diagnostics and aggregated fleet diagnostics.
+- [Remote Teleop](https://transitiverobotics.com/caps/transitive-robotics/remote-teleop/), to control your robot with low-latency video from anywhere in the world,
+- [Terminal](https://transitiverobotics.com/caps/transitive-robotics/terminal/), for web-based shell access,
+- [ROS Tool](https://transitiverobotics.com/caps/transitive-robotics/ros-tool/), for subscribing to ROS topics from the web, used to show battery and charging status in our example,
+- [Configuration Management](https://transitiverobotics.com/caps/transitive-robotics/configuration-management/), for editing config files on your fleet hierarchically (with fleet defaults and robot specific overwrites), and
+- [Health Monitoring](https://transitiverobotics.com/caps/transitive-robotics/health-monitoring/), for monitoring device diagnostics and aggregated fleet diagnostics. 
 
 
 ## Setup
