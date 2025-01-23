@@ -7,10 +7,9 @@ by <a href="https://transitiverobotics.com" >
  </a>
 
 
+![Screenshot from 2025-01-22 16-56-03](https://github.com/user-attachments/assets/ddd0c751-d940-4b73-b6ed-0703b01e1ffb)
 
-![Screenshot from 2024-11-10 09-26-08](https://github.com/user-attachments/assets/900ab2cf-dcec-495b-b4b9-a2b3f6e845c9)
-
-
+![Screenshot from 2025-01-22 16-55-38](https://github.com/user-attachments/assets/8b2c4068-8aa7-468b-b68a-991b46951f67)
 
 
 TransAct is an example of the kinds of robot fleet management dashboards/cloud portals/mission control centers/robot operating centers you can build using Transitive. It serves three purposes:
@@ -23,6 +22,13 @@ TransAct is an example of the kinds of robot fleet management dashboards/cloud p
 
 
 We believe that robotics companies face a [make-vs-buy dilemma](https://transitiverobotics.com/blog/make-vs-buy/) and our mission is to solve this by offering a middle-ground: making it easy for them to build their own fleet management system that perfectly meets their needs.
+
+In the standard configuration it embeds several capabilities:
+- Remote Teleop, to control your robot with low-latency video from anywhere in the world,
+- Terminal, for web-based shell access,
+- Configuration Management, for editing config files on your fleet hierarchically (with fleet defaults and robot specific overwrites), and
+- Health Monitoring, for monitoring device diagnostics and aggregated fleet diagnostics.
+
 
 ## Setup
 
