@@ -33,10 +33,10 @@ In the standard configuration it embeds several capabilities:
 ## Setup
 
 ### Fork
-We encourage you to [fork this repository ](https://github.com/transitiverobotics/transact/fork) and use it as a foundation stone for your awesome robotics app!
+We encourage you to [fork this repository](https://github.com/transitiverobotics/transact/fork) and use it as a starting point to build your own dashboard.
 
 ### Clone
-After forking clone transAct locally (replace `SUPERBOTS` with your github org)
+After forking, clone transAct locally (replace `SUPERBOTS` with your github org)
 
     git clone git@github.com:SUPERBOTS/transact.git
 
@@ -50,16 +50,16 @@ Your local transAct deployment will interface with a Transitive deployment to fi
 
 1. Go to https://portal.transitiverobotics.com and create an account.
 1. In your local transAct clone, copy `sample.env` file to `.env` and edit it:
-   - **VITE_TRANSITIVE_USER** is your Transitive username.
-   - **JWT_SECRET** is the JWT secret from your Security page: https://portal.transitiverobotics.com/security.
+   - **VITE_TRANSITIVE_USER** set this to your Transitive username, created in Step 1.
+   - **JWT_SECRET** set this to your JWT secret found on your Security page: https://portal.transitiverobotics.com/security.
 1. Run `npm install` to install all dependencies.
 
 ### Run
-1. Run `npm run dev` to start transAct locally.
+1. Run `npm run dev` to start transAct locally in dev mode.
 2. Navigate to http://localhost:3000/.
-3. Enjoy!.
+3. Enjoy!
 
-At first you won't see any robots on your dashboards. This is because you don't yet have any robots attached to your Transitive account on transitiverobotics.com. We'll do this next.
+At first you won't see any robots on your dashboard. This is because you haven't yet added any robots to your Transitive account on transitiverobotics.com. We'll do this next.
 
 ## Get some robots
 Follow the [instructions](https://transitiverobotics.com/docs/guides/getting-started/ "Getting started") to add robots to your Transitive account. If you just want to see it working quickly you can use our example Docker image. Go to [fleet page](https://portal.transitiverobotics.com/ "Fleet page"), down to the end of the **Add devices** section and you'll find a command you can grab to run a local Docker robot.
@@ -69,7 +69,7 @@ Finally add some capabilities to the devices you've added from the [fleet page](
 Once these robots show up in the Transitive Portal, they will also appear in your local transAct deployment.
 
 ## Make it your own!
-The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company. After that you'll probably want to go through the sections in `src/client/sections` and edit the properties of the embedded Transitive capabilities to fit your needs, e.g., choose the right video sources for webrtc-video and remote-teleop. The easiest way to do this is to go to your Transitive Portal page, open the capability there, configure it, and then get the pre-configured React code from the "Embed" modal.
+The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company and change the logo. After that you'll probably want to go through the sections in `src/client/sections` and edit the properties of the embedded Transitive capabilities to fit your needs, e.g., choose the right video sources (cameras, ROS topics, etc.) for webrtc-video and remote-teleop. The easiest way to do this is to go to your Transitive Portal page, open the capability there, configure it, and then get the pre-configured React code from the "Embed" modal.
 
 ### UI components
 This project uses [ShadCn](https://ui.shadcn.com/) project for UI components and [Tailwind CSS](https://tailwindcss.com/) for styling.
