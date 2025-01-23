@@ -26,7 +26,7 @@ We believe that robotics companies face a [make-vs-buy dilemma](https://transiti
 In the standard configuration it embeds several capabilities:
 - [Remote Teleop](https://transitiverobotics.com/caps/transitive-robotics/remote-teleop/), to control your robot with low-latency video from anywhere in the world,
 - [Terminal](https://transitiverobotics.com/caps/transitive-robotics/terminal/), for web-based shell access,
-- [ROS Tool](https://transitiverobotics.com/caps/transitive-robotics/ros-tool/), for subscribing to ROS topics from the web, used to show battery and charging status in our example,
+- [ROS Tool](https://transitiverobotics.com/caps/transitive-robotics/ros-tool/), for subscribing to ROS topics from the web, used to show robot pose, battery and charging status in our example, and make service calls,
 - [Configuration Management](https://transitiverobotics.com/caps/transitive-robotics/configuration-management/), for editing config files on your fleet hierarchically (with fleet defaults and robot specific overwrites), and
 - [Health Monitoring](https://transitiverobotics.com/caps/transitive-robotics/health-monitoring/), for monitoring device diagnostics and aggregated fleet diagnostics. 
 
