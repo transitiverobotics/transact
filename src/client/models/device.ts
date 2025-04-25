@@ -1,11 +1,5 @@
-import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video } from 'lucide-react';
-
-import { VideoSection } from '@sections/video-section';
-import { TerminalSection } from '@sections/terminal-section';
-import { HealthSection } from '@sections/health-section';
-import { ConfigSection } from '@sections/config-section';
-import { TeleopSection } from '@sections/teleop-section';
-
+import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video, MapPinned }
+  from 'lucide-react';
 
 export class DeviceType {
   name: string;
@@ -28,57 +22,58 @@ export class Capability {
   id: string;
   displayName: string;
   route: string | null;
-  section: React.ComponentType | null;
   icon: React.ComponentType | null;
+  props?: Record<string, any>; // Props to be passed to TransitiveCapability
+};
 
-  constructor({id, displayName, route, section, icon}:
-    { id: string, displayName: string, route: string | null,
-      section: React.ComponentType | null, icon: React.ComponentType | null
-    }) {
-    this.id = id;
-    this.displayName = displayName;
-    this.route = route;
-    this.section = section;
-    this.icon = icon;
-  }
-}
-
-export const capabilities = {
-  'webrtc-video': new Capability({
+export const capabilities: Capability[] = {
+  'maps': {
+    id: 'maps',
+    displayName: 'Map',
+    route: '/map',
+    icon: MapPinned
+  },
+  'webrtc-video': {
     id: 'webrtc-video',
     displayName: 'Video',
     route: '/video',
-    section: VideoSection,
-    icon: Video
-  }),
-  'remote-teleop': new Capability({
+    icon: Video,
+    props: { count: '1', quantizer: '25', timeout: '1800', type: 'videotestsrc' }
+  },
+  'remote-teleop': {
     id: 'remote-teleop',
     displayName: 'Teleoperation',
     route: '/teleoperation',
-    section: TeleopSection,
-    icon: Joystick
-  }),
-  terminal: new Capability({
+    icon: Joystick,
+    props: {
+      control_rosVersion: '1',
+      control_topic: '/joy',
+      control_type: 'sensor_msgs/Joy',
+      count: '1',
+      quantizer: '25',
+      timeout: '1800',
+      type: 'videotestsrc',
+    }
+  },
+  terminal: {
     id: 'terminal',
     displayName: 'Terminal',
     route: '/terminal',
-    section: TerminalSection,
     icon: Terminal
-  }),
-  'health-monitoring': new Capability({
+  },
+  'health-monitoring': {
     id: 'health-monitoring',
     displayName: 'Health',
     route: '/health',
-    section: HealthSection,
-    icon: HeartPulse
-  }),
-  'configuration-management': new Capability({
+    icon: HeartPulse,
+    props: {delimiters: 'undefined'}
+  },
+  'configuration-management': {
     id: 'configuration-management',
     displayName: 'Configuration',
     route: '/configuration',
-    section: ConfigSection,
     icon: SlidersHorizontal
-  })
+  }
 }
 
 export class Device {
@@ -103,5 +98,5 @@ export class Device {
 export default {
   DeviceType,
   Robot,
-  Device,
+  Device
 }

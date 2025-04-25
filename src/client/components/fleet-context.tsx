@@ -3,11 +3,11 @@ import _ from 'lodash';
 
 import { JWTContext, JWTContextProvider } from '@components/jwt-context';
 
-import { useMqttSync, mergeVersions, CapabilityContextProvider  } from '@transitive-sdk/utils-web';
+import { useMqttSync, mergeVersions, CapabilityContextProvider  }
+  from '@transitive-sdk/utils-web';
 import { Capability, capabilities, Device, Robot } from '@models/device';
 import { getLogger} from '@transitive-sdk/utils-web';
 import { UserContext } from "@components/user-context";
-
 
 const log = getLogger('FleetContext');
 log.setLevel('debug');

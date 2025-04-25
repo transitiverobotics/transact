@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger }
+  from '@components/ui/sheet';
 import { Button } from '@components/ui/button';
 import _ from 'lodash';
 
@@ -12,6 +13,7 @@ import { getLogger} from '@transitive-sdk/utils-web';
 import { Capability, capabilities } from '@models/device';
 import { DevicesSection } from '@sections/devices-section';
 import { DeviceSection } from '@sections/device-section';
+import { CapabilitySection } from '@sections/capability-section';
 import { UserContext } from '@components/user-context';
 
 const log = getLogger('DashBoard');
@@ -24,7 +26,8 @@ function DashBoard() {
     return <div>Loading...</div>;
   }
   return (
-    <div className='grid min-h-screen max-h-screen grid-rows-[3.5rem_1fr] md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] overflow-hidden'>
+    <div className='grid min-h-screen max-h-screen grid-rows-[3.5rem_1fr]
+      md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] overflow-hidden'>
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -51,28 +54,39 @@ function DashBoard() {
           of devices. */}
         <Routes key='routes'>
           <Route path='*' element={<Navigate to='devices' />} />
-          <Route key='devices-section' path='/devices' element={<DevicesSection />} />
-          <Route key='device-section' path='/devices/:deviceId' element={<DeviceSection />} />
+          <Route key='devices-section' path='/devices'
+            element={<DevicesSection />} />
+          <Route key='device-section' path='/devices/:deviceId'
+            element={<DeviceSection />} />
           {_.map(
             _.filter(capabilities, (capability: Capability) => capability.route),
             (capability: Capability, capabilityId: string) => (
               <Route
                 key={capabilityId}
                 path={capability.route}
-                element={<capability.section />}
-              />
-            )
-          )}
+                element={
+                    <CapabilitySection
+                      capability={capability.id}
+                      route={`/dashboard${capability.route}`}
+                      additionalProps={capability.props}/>
+                  }
+                  />))
+          }
           {_.map(
             _.filter(capabilities, (capability: Capability) => capability.route),
             (capability: Capability, capabilityId: string) => (
               <Route
                 key={capabilityId + '_device'}
                 path={`${capability.route}/:deviceId`}
-                element={<capability.section />}
+                element={
+                  <CapabilitySection
+                  capability={capability.id}
+                  route={`/dashboard${capability.route}`}
+                  additionalProps={capability.props}/>
+                }
               />
             )
-          )}                    
+          )}
         </Routes>
       </FleetContextProvider>
     </div>
