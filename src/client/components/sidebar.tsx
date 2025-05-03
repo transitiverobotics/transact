@@ -16,7 +16,8 @@ import {
 import { Bot, CircleUser } from 'lucide-react';
 import { UserContext } from '@components/user-context';
 import { getLogger} from '@transitive-sdk/utils-web';
-import { Capability, capabilities } from '@models/device';
+import { Capability } from '@models/device';
+import { capabilities } from '@config/config';
 
 const log = getLogger('Sidebar');
 log.setLevel('debug');

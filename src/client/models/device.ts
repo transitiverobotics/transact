@@ -1,5 +1,3 @@
-import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video, MapPinned }
-  from 'lucide-react';
 
 export class DeviceType {
   name: string;
@@ -25,56 +23,6 @@ export class Capability {
   icon: React.ComponentType | null;
   props?: Record<string, any>; // Props to be passed to TransitiveCapability
 };
-
-export const capabilities: Capability[] = {
-  'maps': {
-    id: 'maps',
-    displayName: 'Map',
-    route: '/map',
-    icon: MapPinned
-  },
-  'webrtc-video': {
-    id: 'webrtc-video',
-    displayName: 'Video',
-    route: '/video',
-    icon: Video,
-    props: { count: '1', quantizer: '25', timeout: '1800', type: 'videotestsrc' }
-  },
-  'remote-teleop': {
-    id: 'remote-teleop',
-    displayName: 'Teleoperation',
-    route: '/teleoperation',
-    icon: Joystick,
-    props: {
-      control_rosVersion: '1',
-      control_topic: '/joy',
-      control_type: 'sensor_msgs/Joy',
-      count: '1',
-      quantizer: '25',
-      timeout: '1800',
-      type: 'videotestsrc',
-    }
-  },
-  terminal: {
-    id: 'terminal',
-    displayName: 'Terminal',
-    route: '/terminal',
-    icon: Terminal
-  },
-  'health-monitoring': {
-    id: 'health-monitoring',
-    displayName: 'Health',
-    route: '/health',
-    icon: HeartPulse,
-    props: {delimiters: 'undefined'}
-  },
-  'configuration-management': {
-    id: 'configuration-management',
-    displayName: 'Configuration',
-    route: '/configuration',
-    icon: SlidersHorizontal
-  }
-}
 
 export class Device {
   id: string;

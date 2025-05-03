@@ -10,7 +10,8 @@ import { Sidebar } from '@components/sidebar';
 import { FleetContextProvider } from '@components/fleet-context';
 
 import { getLogger} from '@transitive-sdk/utils-web';
-import { Capability, capabilities } from '@models/device';
+import { Capability } from '@models/device';
+import { capabilities } from '@config/config';
 import { DevicesSection } from '@sections/devices-section';
 import { DeviceSection } from '@sections/device-section';
 import { CapabilitySection } from '@sections/capability-section';
