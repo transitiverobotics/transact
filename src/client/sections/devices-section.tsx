@@ -12,8 +12,8 @@ import {
 } from '@components/ui/table';
 import { Badge, badgeVariants } from '@components/ui/badge';
 
-
-import { capabilities, Capability, Device } from '@models/device';
+import { Capability, Device } from '@models/device';
+import { capabilities } from '@config/config';
 import { FleetContext } from '@components/fleet-context';
 import { Heartbeat } from '@components/heartbeat';
 import { Accordion, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
@@ -106,6 +106,7 @@ export function DevicesSection() {
                   <JWTCapability
                   device={'_fleet'}
                   capability={`@transitive-robotics/${capability.id}`}
+                  {...capability.fleetProps}
                   />
                 </AccordionContent>
               </AccordionItem>

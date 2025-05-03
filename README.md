@@ -28,7 +28,7 @@ In the standard configuration it embeds several capabilities:
 - [Terminal](https://transitiverobotics.com/caps/transitive-robotics/terminal/), for web-based shell access,
 - [ROS Tool](https://transitiverobotics.com/caps/transitive-robotics/ros-tool/), for subscribing to ROS topics from the web, used to show robot pose, battery and charging status in our example, and make service calls,
 - [Configuration Management](https://transitiverobotics.com/caps/transitive-robotics/configuration-management/), for editing config files on your fleet hierarchically (with fleet defaults and robot specific overwrites), and
-- [Health Monitoring](https://transitiverobotics.com/caps/transitive-robotics/health-monitoring/), for monitoring device diagnostics and aggregated fleet diagnostics. 
+- [Health Monitoring](https://transitiverobotics.com/caps/transitive-robotics/health-monitoring/), for monitoring device diagnostics and aggregated fleet diagnostics.
 
 
 ## Setup
@@ -68,6 +68,10 @@ Follow the [instructions](https://transitiverobotics.com/docs/guides/getting-sta
 Finally add some capabilities to the devices you've added from the [fleet page](https://portal.transitiverobotics.com/ "Fleet page")
 
 Once these robots show up in the Transitive Portal, they will also appear in your local transAct deployment.
+
+## Configure capabilities
+
+Edit `src/client/config/config.ts` to set the Transitive capabilities you have installed on your robots (e.g., webrtc-video) and the props you want to use for them (see the Embed in the Transitive Portal after you've configured a capability).
 
 ## Make it your own!
 The code is yours! A good first step is to find and replace "SuperBots" in the entire project with the name of your own company and change the logo. After that you'll probably want to go through the sections in `src/client/sections` and edit the properties of the embedded Transitive capabilities to fit your needs, e.g., choose the right video sources (cameras, ROS topics, etc.) for webrtc-video and remote-teleop. The easiest way to do this is to go to your Transitive Portal page, open the capability there, configure it, and then get the pre-configured React code from the "Embed" modal.

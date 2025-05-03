@@ -5,7 +5,8 @@ import { JWTContext, JWTContextProvider } from '@components/jwt-context';
 
 import { useMqttSync, mergeVersions, CapabilityContextProvider  }
   from '@transitive-sdk/utils-web';
-import { Capability, capabilities, Device, Robot } from '@models/device';
+import { Capability, Device, Robot } from '@models/device';
+import { capabilities } from '@config/config';
 import { getLogger} from '@transitive-sdk/utils-web';
 import { UserContext } from "@components/user-context";
 

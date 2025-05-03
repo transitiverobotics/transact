@@ -23,8 +23,6 @@ export function CapabilitySection({ capability, route, additionalProps = {} }: S
   const { deviceId } = useParams();
   const navigate = useNavigate();
 
-  console.log({additionalProps});
-
   return (
     <>
       <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4

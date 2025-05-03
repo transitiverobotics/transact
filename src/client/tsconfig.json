@@ -4,12 +4,6 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["*"],
-      "@components/*": ["components/*"],
-      "@sections/*": ["sections/*"],
-      "@models/*": ["models/*"],
-    }
+    "baseUrl": "."
   }
 }
