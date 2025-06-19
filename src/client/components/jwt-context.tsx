@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react'
-import { getLogger} from '@transitive-sdk/utils-web';
+import React, { createContext, useEffect, useState, useContext } from 'react';
+import { getLogger } from '@transitive-sdk/utils-web';
 
 const log = getLogger('JWTContext');
 log.setLevel('debug');
