@@ -1,5 +1,5 @@
-import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video, MapPinned }
-  from 'lucide-react';
+import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video, MapPinned,
+    Cctv }from 'lucide-react';
 
 import { Capability } from '@models/device';
 
@@ -66,6 +66,8 @@ export const capabilities: Capability[] = {
       quantizer: '25',
       timeout: '123',
       type: 'videotestsrc',
+      blacklist_netmask: '172.0.0.0/8,10.0.0.0/8',
+      // whitelist_netmask: '192.0.0.0/8,127.0.0.0/32'
     }
   },
   terminal: {
@@ -88,5 +90,22 @@ export const capabilities: Capability[] = {
     displayName: 'Configuration',
     route: '/configuration',
     icon: SlidersHorizontal
+  },
+  'video-recorder': {
+    id: 'video-recorder',
+    displayName: 'Video Recorder',
+    route: '/recorder',
+    icon: Cctv,
+    props: {
+      // This shows the video player instead of the track configuration UI,
+      // which is of course what you usually want in a dashboard
+      component: 'video-recorder-player',
+      // If the following are provided, then the calendar will not be shown and
+      // instead the provided time-range will be selected and playered, i.e.,
+      // only the actual video player will be shown with these videos preloaded.
+      trackId: 'bKtBkIYj',
+      start: "1748973000000",
+      end: "1748973600000",
+    }
   }
 }
