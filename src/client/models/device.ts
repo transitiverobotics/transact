@@ -22,6 +22,11 @@ export class Capability {
   route: string | null;
   icon: React.ComponentType | null;
   props?: Record<string, any>; // Props to be passed to TransitiveCapability
+  fleetProps?: Record<string, any>; // Props to be passed to TransitiveCapability in fleet view
+  constructor({id, displayName}: {id: string, displayName: string}) {
+    this.id = id;
+    this.displayName = displayName;
+  }
 };
 
 export class Device {
@@ -30,10 +35,9 @@ export class Device {
   os: string;
   type: DeviceType;
   heartbeat: Date;
-  capabilities: Capability[];
+  capabilities: Record<string, Capability>;
   constructor(id: string, name: string, os: string, heartbeat: Date,
-    capabilities: Capability[] = [], type: DeviceType) {
-
+    capabilities: Record<string, Capability> = {}, type: DeviceType) {
     this.id = id;
     this.name = name;
     this.os = os;

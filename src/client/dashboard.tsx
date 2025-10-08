@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger }
@@ -23,6 +23,10 @@ log.setLevel('debug');
 
 function DashBoard() {
   const {ready} = useContext(UserContext);
+  const capabilitiesWithRoutes = useMemo(() => {
+    return _.pickBy(capabilities, (capability: Capability) => capability.route);
+  }, [capabilities]);
+
   if (!ready) {
     return <div>Loading...</div>;
   }
@@ -59,32 +63,28 @@ function DashBoard() {
             element={<DevicesSection />} />
           <Route key='device-section' path='/devices/:deviceId'
             element={<DeviceSection />} />
-          {_.map(
-            _.filter(capabilities, (capability: Capability) => capability.route),
-            (capability: Capability, capabilityId: string) => (
-              <Route
-                key={capabilityId}
+            {_.map(capabilitiesWithRoutes, (capability: Capability, capabilityKey: string) => (
+                <Route
+                key={capabilityKey}
                 path={capability.route}
                 element={
-                    <CapabilitySection
-                      capability={capability.id}
-                      route={`/dashboard${capability.route}`}
-                      additionalProps={capability.props}/>
+                  <CapabilitySection
+                    capabilityKey={capabilityKey}
+                    route={`/dashboard${capability.route}`}
+                    additionalProps={capability.props}/>
                   }
                   />))
-          }
-          {_.map(
-            _.filter(capabilities, (capability: Capability) => capability.route),
-            (capability: Capability, capabilityId: string) => (
+            }
+          {_.map(capabilitiesWithRoutes, (capability: Capability, capabilityKey: string) => (
               <Route
-                key={capabilityId + '_device'}
+                key={capabilityKey + '_device'}
                 path={`${capability.route}/:deviceId`}
                 element={
                   <CapabilitySection
-                  capability={capability.id}
-                  route={`/dashboard${capability.route}`}
-                  additionalProps={capability.props}/>
-                }
+                    capabilityKey={capabilityKey}
+                    route={`/dashboard${capability.route}`}
+                    additionalProps={capability.props}/>
+                  }
               />
             )
           )}

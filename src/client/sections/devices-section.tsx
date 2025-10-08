@@ -94,8 +94,8 @@ export function DevicesSection() {
           className='rounded-lg border border-dashed shadow-sm px-6'
         >
           <Accordion type="single" collapsible className='w-full'>
-            {_.map(capabilities, (capability: Capability, capabilityId: string) => (
-              <AccordionItem key={capabilityId} value={capabilityId}>
+            {_.map(capabilities, (capability: Capability, capabilityKey: string) => (
+              <AccordionItem key={capabilityKey} value={capabilityKey}>
                 <AccordionTrigger>
                   <div className={'flex items-center gap-3 rounded-lg px-3 py-2 transition-all'}>
                     <capability.icon/>
@@ -105,7 +105,7 @@ export function DevicesSection() {
                 <AccordionContent>
                   <JWTCapability
                   device={'_fleet'}
-                  capability={`@transitive-robotics/${capability.id}`}
+                  capability={capability.id}
                   {...capability.fleetProps}
                   />
                 </AccordionContent>
