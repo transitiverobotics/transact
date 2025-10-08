@@ -19,7 +19,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-        <UserContextProvider>          
+        <UserContextProvider>
           <Routes>
             <Route path='/login' element={<Login/>} />
             <Route path='/dashboard/*' element={<DashBoard/>} />

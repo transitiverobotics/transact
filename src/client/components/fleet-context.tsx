@@ -35,26 +35,27 @@ const ProviderWithRosTool = ({ children }) => {
         (err) => err && console.warn('Failed to subscribe', err));
     }, [mqttSync]);
 
-  const fleet = _.map(data?.[transitiveId], (device, id) => {
+  const fleet = _.map(data?.[transitiveId], (device, id:string) => {
     const device_data = mergeVersions(device['@transitive-robotics']['_robot-agent']);
-    const running = device_data?.status?.runningPackages?.['@transitive-robotics'];
-    // To tell whether a capability is running we need to also verify that at least
-    // one of the values in the versions-object is truthy
-    const deviceCapabilities = running ? Object.keys(_.pickBy(running,
-        versions => Object.values(versions).some(Boolean))) : [];
+    const deviceCapabilities: Record<string, Capability> = {};
+
+    _.map(['@transitive-robotics', '@local'], (scope : string) => {    
+      _.map(
+        _.pickBy(
+          device_data?.status?.runningPackages?.[scope],
+          versions => Object.values(versions).some(Boolean)
+        ), (_, capabilityId: string) => {
+          deviceCapabilities[capabilityId] = capabilities[capabilityId] ||
+            new Capability({id: capabilityId, displayName: capabilityId});
+      });
+    });
 
     return new Device(
       id,
       device_data?.info?.os?.hostname || id,
       device_data?.info?.os?.lsb?.Description || 'Unknown',
       device_data?.status?.heartbeat || new Date(),
-      deviceCapabilities.map((capability: Capability) => {
-        if (capabilities.hasOwnProperty(capability)) {
-          return capabilities[capability];
-        } else {
-          return new Capability(capability, capability);
-        }
-      }),
+      deviceCapabilities,
       Robot
     );
   });

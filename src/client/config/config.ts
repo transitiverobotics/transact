@@ -1,5 +1,5 @@
 import { HeartPulse, Joystick, SlidersHorizontal, Terminal, Video, MapPinned,
-    Cctv }from 'lucide-react';
+    Cctv, LockKeyhole }from 'lucide-react';
 
 import { Capability } from '@models/device';
 
@@ -7,9 +7,9 @@ import { Capability } from '@models/device';
  * Configure the Transitive capabilities you have installed on your fleet and
  * want to embed in your transAct dashboard.
  */
-export const capabilities: Capability[] = {
+export const capabilities: Record<string, Capability> = {
   'maps': {
-    id: 'maps',
+    id: '@transitive-robotics/maps',
     displayName: 'Map',
     route: '/map',
     icon: MapPinned,
@@ -42,7 +42,7 @@ export const capabilities: Capability[] = {
     }
   },
   'webrtc-video': {
-    id: 'webrtc-video',
+    id: '@transitive-robotics/webrtc-video',
     displayName: 'Video',
     route: '/video',
     icon: Video,
@@ -54,7 +54,7 @@ export const capabilities: Capability[] = {
     }
   },
   'remote-teleop': {
-    id: 'remote-teleop',
+    id: '@transitive-robotics/remote-teleop',
     displayName: 'Teleoperation',
     route: '/teleoperation',
     icon: Joystick,
@@ -62,22 +62,21 @@ export const capabilities: Capability[] = {
       control_rosVersion: '1',
       control_topic: '/joy',
       control_type: 'sensor_msgs/Joy',
-      count: '1',
+      count: '2',
       quantizer: '25',
-      timeout: '123',
+      timeout: '1800',
       type: 'videotestsrc',
-      blacklist_netmask: '172.0.0.0/8,10.0.0.0/8',
-      // whitelist_netmask: '192.0.0.0/8,127.0.0.0/32'
+      type_1:'videotestsrc',
     }
   },
   terminal: {
-    id: 'terminal',
+    id: '@transitive-robotics/terminal',
     displayName: 'Terminal',
     route: '/terminal',
     icon: Terminal
   },
   'health-monitoring': {
-    id: 'health-monitoring',
+    id: '@transitive-robotics/health-monitoring',
     displayName: 'Health',
     route: '/health',
     icon: HeartPulse,
@@ -85,14 +84,14 @@ export const capabilities: Capability[] = {
       delimiters: 'undefined'
     }
   },
-  'configuration-management': {
-    id: 'configuration-management',
+  'configuration-management':{
+    id: '@transitive-robotics/configuration-management',
     displayName: 'Configuration',
     route: '/configuration',
     icon: SlidersHorizontal
   },
   'video-recorder': {
-    id: 'video-recorder',
+    id: '@transitive-robotics/video-recorder',
     displayName: 'Video Recorder',
     route: '/recorder',
     icon: Cctv,
@@ -107,5 +106,11 @@ export const capabilities: Capability[] = {
       start: "1748973000000",
       end: "1748973600000",
     }
+  },
+  'robot-lock': {
+    id: '@transitive-robotics/robot-lock',
+    displayName: 'Robot Lock',
+    route: '/lock',
+    icon: LockKeyhole
   }
 }

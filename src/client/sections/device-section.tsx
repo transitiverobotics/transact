@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import _ from 'lodash';
 
 import { Link, useParams } from 'react-router-dom';
-import { Capability, Device } from '@models/device';
+import { Device } from '@models/device';
 import { Heartbeat } from '@components/heartbeat';
 import { FleetContext } from '@components/fleet-context';
 import { CircleArrowLeftIcon } from 'lucide-react';
@@ -44,12 +44,17 @@ export function DeviceSection() {
           className='flex flex-wrap gap-6 p-4 items-stretch content-start
           rounded-lg border border-dashed shadow-sm relative'
         >
-          {_.some(device.capabilities, (capability: Capability) =>
-            capability.id === 'remote-teleop') && (
+          {device.capabilities['robot-lock'] && (
+              <div className='w-full'>
+                <JWTCapability device={deviceId}
+                  capability={device.capabilities['robot-lock'].id} />
+              </div>
+          )}
+          {device.capabilities['remote-teleop'] && (
               <div className='grow-0 basis-3/5 shrink m-auto'>
                 <JWTCapability
                   device={deviceId}
-                  capability={'@transitive-robotics/remote-teleop'}
+                  capability={device.capabilities['remote-teleop'].id}
                   control_rosVersion='1'
                   control_topic='/joy'
                   control_type='sensor_msgs/Joy'
@@ -78,21 +83,19 @@ export function DeviceSection() {
                 </TriggerServiceButton>
               </div>
             </div>
-            {_.some(device.capabilities, (capability: Capability) =>
-              capability.id === 'health-monitoring') && (
+            {device.capabilities['health-monitoring'] && (
                 <div>
                   <JWTCapability device={deviceId}
-                    capability={'@transitive-robotics/health-monitoring'}
+                    capability={device.capabilities['health-monitoring'].id}
                     delimiters={'undefined'}/>
                 </div>
             )}
           </div>
 
-          {_.some(device.capabilities, (capability: Capability) =>
-            capability.id === 'terminal') && (
+          {device.capabilities['terminal'] && (
               <div className='w-full h-1/4'>
                 <JWTCapability device={deviceId}
-                  capability={'@transitive-robotics/terminal'} />
+                  capability={device.capabilities['terminal'].id } />
               </div>
           )}
         </div>

@@ -11,7 +11,7 @@ log.setLevel('debug');
 const host = import.meta.env.VITE_HOST; // Transitive deployment
 const insecure = import.meta.env.VITE_INSECURE
 
-/** Caomponent that shows the context (front-end API) provided by the
+/** Component that shows the context (front-end API) provided by the
 * capability, if any */
 const ShowContext = ({jwt}) => {
   const context = useContext(CapabilityContext);

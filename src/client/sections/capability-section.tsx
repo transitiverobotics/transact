@@ -2,9 +2,10 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DeviceSelector from '@components/device-selector';
 import { JWTCapability } from '@components/jwt-capability';
+import { capabilities } from '@config/config';
 
 interface SectionProps {
-  capability: string;
+  capabilityKey: string;
   route: string;
   additionalProps?: Record<string, any>; // Props to be passed to JWTCapability
 }
@@ -19,10 +20,9 @@ interface SectionProps {
 *       additionalProps={{ count: '1', type: 'videotestsrc' }}
 *     />
 * */
-export function CapabilitySection({ capability, route, additionalProps = {} }: SectionProps) {
+export function CapabilitySection({ capabilityKey, route, additionalProps = {} }: SectionProps) {
   const { deviceId } = useParams();
   const navigate = useNavigate();
-
   return (
     <>
       <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4
@@ -31,7 +31,7 @@ export function CapabilitySection({ capability, route, additionalProps = {} }: S
           <div className="relative">
             <DeviceSelector
               deviceId={deviceId}
-              capability={capability}
+              capabilityKey={capabilityKey}
               onChange={(id: string) => navigate(`${route}/${id}`)}
             />
           </div>
@@ -43,7 +43,7 @@ export function CapabilitySection({ capability, route, additionalProps = {} }: S
           {deviceId && (
             <JWTCapability
               device={deviceId}
-              capability={`@transitive-robotics/${capability}`}
+              capability={capabilities[capabilityKey].id}
               {...additionalProps}
             />
           )}
