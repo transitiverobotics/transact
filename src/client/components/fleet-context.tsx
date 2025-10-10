@@ -27,12 +27,14 @@ const ProviderWithRosTool = ({ children }) => {
   const { mqttSync, data, ready } = useMqttSync({jwt, id: transitiveId, mqttUrl});
 
   useEffect(() => {
-      mqttSync?.mqtt.connected && mqttSync.subscribe(
-        `/${transitiveId}/+/@transitive-robotics/_robot-agent/+/info`,
-        (err) => err && console.warn('Failed to subscribe', err));
-      mqttSync?.mqtt.connected && mqttSync.subscribe(
-        `/${transitiveId}/+/@transitive-robotics/_robot-agent/+/status`,
-        (err) => err && console.warn('Failed to subscribe', err));
+      if(mqttSync?.mqtt.connected){
+        mqttSync.subscribe(`/${transitiveId}/+/@transitive-robotics/_robot-agent/+/info`,
+          (err) => err && console.warn('Failed to subscribe', err));
+        mqttSync.subscribe(`/${transitiveId}/+/@transitive-robotics/_robot-agent/+/status/runningPackages/#`,
+          (err) => err && console.warn('Failed to subscribe', err));
+        mqttSync.subscribe(`/${transitiveId}/+/@transitive-robotics/_robot-agent/+/status/heartbeat`,
+          (err) => err && console.warn('Failed to subscribe', err));
+      }
     }, [mqttSync]);
 
   const fleet = _.map(data?.[transitiveId], (device, id:string) => {
