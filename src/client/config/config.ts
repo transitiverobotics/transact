@@ -102,9 +102,9 @@ export const capabilities: Record<string, Capability> = {
       // If the following are provided, then the calendar will not be shown and
       // instead the provided time-range will be selected and playered, i.e.,
       // only the actual video player will be shown with these videos preloaded.
-      trackId: 'bKtBkIYj',
-      start: "1748973000000",
-      end: "1748973600000",
+      // trackId: 'bKtBkIYj',
+      // start: "1748973000000",
+      // end: "1748973600000",
     }
   },
   'robot-lock': {
