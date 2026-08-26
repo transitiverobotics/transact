@@ -38,7 +38,7 @@
     "react-icons": "^5.3.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-drift-marker": "^4.0.0",
-    "react-router-dom": "^6.27.0",
+    "react-router-dom": "^7.18.2",
     "session-file-store": "^1.5.0",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.3",
